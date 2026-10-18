@@ -15,13 +15,13 @@ export default function OpenGraphImage() {
           flexDirection: 'column',
           justifyContent: 'center',
           padding: 90,
-          background: 'linear-gradient(135deg, #14152b 0%, #2a2699 100%)',
+          background: 'linear-gradient(135deg, #06201f 0%, #0f766e 100%)',
           color: '#f4f3ee',
         }}
       >
-        <div style={{ fontSize: 30, color: '#a5b4fc', marginBottom: 24 }}>Portfolio</div>
+        <div style={{ fontSize: 30, color: '#5eead4', marginBottom: 24 }}>Portfolio</div>
         <div style={{ fontSize: 96, fontWeight: 800, lineHeight: 1.05 }}>Ruslan Jurakulov</div>
-        <div style={{ fontSize: 42, marginTop: 28, maxWidth: 900, color: '#d9dcf5' }}>
+        <div style={{ fontSize: 42, marginTop: 28, maxWidth: 900, color: '#d5f5f0' }}>
           Web developer building fast sites for small businesses
         </div>
       </div>

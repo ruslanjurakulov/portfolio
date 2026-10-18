@@ -1,37 +1,69 @@
 // Small inline-SVG previews for the Work cards and the hero. Decorative only.
 
 export function HeroArt() {
+  const stars: [number, number, number][] = [[146, 82, 1.4], [204, 96, 1.2], [152, 138, 1.1], [208, 150, 1.5], [180, 74, 1]];
+  const phoneStars: [number, number, number][] = [[288, 132, 1.5], [366, 128, 1.2], [296, 196, 1.2], [372, 214, 1.6], [336, 140, 1]];
   return (
     <svg viewBox="0 0 420 340" className="float h-auto w-full" aria-hidden="true" focusable="false">
       <defs>
-        <linearGradient id="hero-g" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" style={{ stopColor: 'rgb(var(--accent))' }} stopOpacity="0.95" />
-          <stop offset="1" style={{ stopColor: 'rgb(var(--accent))' }} stopOpacity="0.45" />
+        <linearGradient id="hero-night" x1="0" y1="0" x2="0.6" y2="1">
+          <stop offset="0" stopColor="#051c20" />
+          <stop offset="1" stopColor="#0f5f5a" />
         </linearGradient>
       </defs>
-      {/* browser window */}
+      {/* browser window: a video studio with a script, a vertical video and a timeline */}
       <rect x="10" y="20" width="330" height="240" rx="16" className="fill-surface stroke-line" strokeWidth="2" />
       <path d="M10 36a16 16 0 0 1 16-16h298a16 16 0 0 1 16 16v20H10z" className="fill-soft" />
       <circle cx="32" cy="38" r="5" className="fill-line" />
       <circle cx="50" cy="38" r="5" className="fill-line" />
       <circle cx="68" cy="38" r="5" className="fill-line" />
-      <rect x="34" y="80" width="170" height="14" rx="7" className="fill-ink" />
-      <rect x="34" y="104" width="120" height="14" rx="7" className="fill-ink" />
-      <rect x="34" y="136" width="230" height="8" rx="4" className="fill-line" />
-      <rect x="34" y="152" width="200" height="8" rx="4" className="fill-line" />
-      <rect x="34" y="190" width="96" height="30" rx="15" className="fill-accent" />
-      <rect x="142" y="190" width="80" height="30" rx="15" className="fill-none stroke-line" strokeWidth="2" />
-      <rect x="236" y="76" width="86" height="104" rx="12" fill="url(#hero-g)" />
-      <circle cx="279" cy="116" r="16" className="fill-surface" opacity="0.9" />
-      <path d="M252 168c8-20 20-26 27-26s19 6 27 26z" className="fill-surface" opacity="0.9" />
-      {/* phone */}
+      <rect x="92" y="30" width="150" height="16" rx="8" className="fill-surface" />
+      <text x="167" y="41.5" textAnchor="middle" fontFamily="ui-monospace, Menlo, monospace" fontSize="9.5" className="fill-muted">
+        nightshift-ai.studio
+      </text>
+      {/* steps */}
+      {[0, 1, 2, 3].map((i) => (
+        <g key={i} transform={`translate(0 ${i * 30})`}>
+          {i < 3 ? (
+            <>
+              <circle cx="34" cy="80" r="8" className="fill-accent" />
+              <path d="m30.5 80 2.6 2.6 4.6-5" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="stroke-on-accent" />
+            </>
+          ) : (
+            <circle cx="34" cy="80" r="7" className="fill-none stroke-line" strokeWidth="2" />
+          )}
+          <rect x="50" y="76" width={[62, 48, 56, 44][i]} height="8" rx="4" className={i < 3 ? 'fill-ink' : 'fill-line'} />
+        </g>
+      ))}
+      {/* vertical video */}
+      <rect x="130" y="66" width="92" height="152" rx="10" fill="url(#hero-night)" />
+      <circle cx="176" cy="116" r="17" fill="#ccfbf1" />
+      <circle cx="184" cy="110" r="15" fill="#0a3a3d" />
+      {stars.map(([x, y, r]) => (
+        <circle key={`${x}-${y}`} cx={x} cy={y} r={r} fill="#ccfbf1" opacity="0.8" />
+      ))}
+      <rect x="142" y="178" width="68" height="9" rx="4.5" fill="#fff" opacity="0.92" />
+      <rect x="152" y="193" width="48" height="9" rx="4.5" fill="#5eead4" />
+      {/* timeline */}
+      <rect x="26" y="232" width="296" height="16" rx="8" className="fill-soft" />
+      <g className="fill-accent">
+        {Array.from({ length: 24 }, (_, i) => (
+          <rect key={i} x={32 + i * 8} y={240 - 2 - ((i * 7) % 5) * 1.6} width="3.4" height={4 + ((i * 7) % 5) * 3.2} rx="1.7" opacity={i < 15 ? 1 : 0.35} />
+        ))}
+      </g>
+      {/* phone with the same video */}
       <rect x="262" y="104" width="132" height="226" rx="22" className="fill-surface stroke-ink" strokeWidth="3" />
-      <rect x="306" y="112" width="44" height="6" rx="3" className="fill-ink" />
-      <rect x="278" y="136" width="100" height="70" rx="12" fill="url(#hero-g)" />
-      <rect x="278" y="220" width="84" height="10" rx="5" className="fill-ink" />
-      <rect x="278" y="240" width="100" height="6" rx="3" className="fill-line" />
-      <rect x="278" y="254" width="72" height="6" rx="3" className="fill-line" />
-      <rect x="278" y="280" width="100" height="28" rx="14" className="fill-accent" />
+      <rect x="272" y="114" width="112" height="206" rx="14" fill="url(#hero-night)" />
+      <rect x="306" y="120" width="44" height="6" rx="3" fill="#000" opacity="0.5" />
+      <circle cx="328" cy="178" r="26" fill="#ccfbf1" />
+      <circle cx="340" cy="168" r="22" fill="#0a3a3d" />
+      {phoneStars.map(([x, y, r]) => (
+        <circle key={`${x}-${y}`} cx={x} cy={y} r={r} fill="#ccfbf1" opacity="0.8" />
+      ))}
+      <rect x="284" y="254" width="88" height="11" rx="5.5" fill="#fff" opacity="0.92" />
+      <rect x="296" y="271" width="64" height="11" rx="5.5" fill="#5eead4" />
+      <rect x="284" y="298" width="88" height="4" rx="2" fill="#fff" opacity="0.25" />
+      <rect x="284" y="298" width="46" height="4" rx="2" fill="#5eead4" />
       {/* language chips */}
       <g fontFamily="ui-monospace, Menlo, monospace" fontSize="13" fontWeight="700">
         <rect x="18" y="282" width="44" height="28" rx="14" className="fill-surface stroke-line" strokeWidth="2" />
@@ -47,30 +79,30 @@ export function HeroArt() {
 
 export type PreviewKind = 'studio' | 'cafe' | 'freelancer';
 
-export function WorkPreview({ kind }: { kind: PreviewKind }) {
+export function WorkPreview({ kind, className = 'block h-auto w-full' }: { kind: PreviewKind; className?: string }) {
   return (
-    <svg viewBox="0 0 320 180" className="block h-auto w-full" aria-hidden="true" focusable="false" preserveAspectRatio="xMidYMid slice">
+    <svg viewBox="0 0 320 180" className={className} aria-hidden="true" focusable="false" preserveAspectRatio="xMidYMid slice">
       {kind === 'studio' && (
         <>
           <defs>
             <linearGradient id="wp-studio" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stopColor="#1b1a4a" />
-              <stop offset="1" stopColor="#4b2bb8" />
+              <stop offset="0" stopColor="#051c20" />
+              <stop offset="1" stopColor="#0f766e" />
             </linearGradient>
           </defs>
           <rect width="320" height="180" fill="url(#wp-studio)" />
-          <rect x="116" y="14" width="88" height="128" rx="12" fill="#0d0e24" stroke="#a5b4fc" strokeWidth="2" />
-          <circle cx="160" cy="68" r="20" fill="#a5b4fc" opacity="0.95" />
-          <path d="M154 58l16 10-16 10z" fill="#0d0e24" />
+          <rect x="116" y="14" width="88" height="128" rx="12" fill="#04191c" stroke="#5eead4" strokeWidth="2" />
+          <circle cx="160" cy="68" r="20" fill="#5eead4" opacity="0.95" />
+          <path d="M154 58l16 10-16 10z" fill="#04191c" />
           <rect x="128" y="104" width="64" height="9" rx="4.5" fill="#fff" opacity="0.9" />
           <rect x="140" y="118" width="40" height="9" rx="4.5" fill="#fff" opacity="0.6" />
-          <g fill="#a5b4fc" opacity="0.85">
+          <g fill="#5eead4" opacity="0.85">
             {[22, 40, 58, 76, 94, 226, 244, 262, 280, 298].map((x, i) => (
               <rect key={x} x={x} y={90 - ((i * 13) % 30)} width="8" height={20 + ((i * 13) % 30) * 2} rx="4" transform="translate(0 -4)" />
             ))}
           </g>
           <rect x="24" y="156" width="272" height="6" rx="3" fill="#fff" opacity="0.25" />
-          <rect x="24" y="156" width="150" height="6" rx="3" fill="#a5b4fc" />
+          <rect x="24" y="156" width="150" height="6" rx="3" fill="#5eead4" />
         </>
       )}
       {kind === 'cafe' && (
@@ -105,22 +137,5 @@ export function WorkPreview({ kind }: { kind: PreviewKind }) {
         </>
       )}
     </svg>
-  );
-}
-
-// Browser-style frame around a preview: gives the Work cards a "real site" feel.
-export function Frame({ url, children, className = '' }: { url: string; children: React.ReactNode; className?: string }) {
-  return (
-    <div className={`border-b border-line bg-surface ${className}`}>
-      <div className="flex items-center gap-1.5 bg-soft px-3 py-2" aria-hidden="true">
-        <span className="h-2.5 w-2.5 rounded-full bg-line" />
-        <span className="h-2.5 w-2.5 rounded-full bg-line" />
-        <span className="h-2.5 w-2.5 rounded-full bg-line" />
-        <span className="ml-2 min-w-0 truncate rounded-full bg-surface px-3 py-0.5 font-mono text-xs text-muted">{url}</span>
-      </div>
-      <div className="flex-1 overflow-hidden bg-soft md:flex md:items-center">
-        <div className="zoom w-full">{children}</div>
-      </div>
-    </div>
   );
 }

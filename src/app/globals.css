@@ -4,7 +4,7 @@
 
 /*
  * Design tokens as space-separated RGB so Tailwind can add alpha.
- * Portfolio = ink on warm paper with an indigo accent.
+ * Portfolio = ink on warm paper with a teal accent.
  * Demo pages override the same tokens on their own wrapper class.
  */
 :root {
@@ -14,9 +14,9 @@
   --ink: 21 22 28;
   --muted: 86 90 102;
   --line: 226 223 214;
-  --accent: 67 56 202;
+  --accent: 14 110 102;
   --on-accent: 255 255 255;
-  --soft: 235 233 251;
+  --soft: 226 244 241;
   --font-display: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --font-body: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
@@ -29,9 +29,9 @@
     --ink: 236 234 228;
     --muted: 163 167 179;
     --line: 42 45 56;
-    --accent: 165 180 252;
+    --accent: 45 212 191;
     --on-accent: 13 14 18;
-    --soft: 28 31 51;
+    --soft: 17 38 40;
   }
 }
 :root[data-theme='dark'] {
@@ -40,9 +40,9 @@
   --ink: 236 234 228;
   --muted: 163 167 179;
   --line: 42 45 56;
-  --accent: 165 180 252;
+  --accent: 45 212 191;
   --on-accent: 13 14 18;
-  --soft: 28 31 51;
+  --soft: 17 38 40;
 }
 
 :root[data-theme='light'] {

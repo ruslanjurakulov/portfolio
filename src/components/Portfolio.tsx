@@ -9,7 +9,8 @@ import { stagger } from '@/lib/stagger';
 import { LinkIcon } from './icons';
 import { Motion } from './Motion';
 import { ThemeToggle } from './ThemeToggle';
-import { Frame, HeroArt, WorkPreview, type PreviewKind } from './previews';
+import { DevicePreview, type Shots } from './DevicePreview';
+import { HeroArt, type PreviewKind } from './previews';
 
 const STORAGE_KEY = 'lang';
 const isLang = (v: unknown): v is Lang => v === 'en' || v === 'ru' || v === 'uz';
@@ -20,16 +21,19 @@ const h2 = 'text-3xl font-extrabold tracking-tight sm:text-4xl';
 const lead = 'mt-3 max-w-2xl text-lg text-muted';
 const card = 'rounded-2xl border border-line bg-surface p-6';
 const iconBtn =
-  'lift press inline-flex h-11 w-11 items-center justify-center rounded-full border border-line bg-surface text-ink hover:text-accent';
+  'lift press inline-flex h-12 w-12 items-center justify-center rounded-full border-2 border-accent bg-accent text-on-accent shadow-[0_8px_20px_-10px_rgb(var(--accent)/0.9)] hover:brightness-110';
 const btnPrimary =
   'group lift press inline-flex min-h-[56px] items-center justify-center gap-2 rounded-full bg-accent px-7 text-lg font-bold text-on-accent shadow-[0_12px_30px_-14px_rgb(var(--accent)/0.8)] hover:opacity-95';
 const btnOutline =
   'lift press inline-flex min-h-[56px] items-center justify-center rounded-full border-2 border-ink/70 px-7 text-lg font-semibold hover:bg-ink hover:text-bg';
 
-const work: { kind: PreviewKind; live: boolean; href: string; url: string }[] = [
-  { kind: 'studio', live: true, href: site.studio.url, url: 'nightshift-ai.studio' },
-  { kind: 'cafe', live: false, href: '/demos/cafe', url: '/demos/cafe' },
-  { kind: 'freelancer', live: false, href: '/demos/freelancer', url: '/demos/freelancer' },
+// Real screenshots of the live site. Set to null to fall back to the drawn placeholder.
+const studioShots: Shots | null = null;
+
+const work: { kind: PreviewKind; live: boolean; href: string; url: string; demo?: string; shots?: Shots }[] = [
+  { kind: 'studio', live: true, href: site.studio.url, url: 'nightshift-ai.studio', shots: studioShots ?? undefined },
+  { kind: 'cafe', live: false, href: '/demos/cafe', url: '/demos/cafe', demo: '/demos/cafe' },
+  { kind: 'freelancer', live: false, href: '/demos/freelancer', url: '/demos/freelancer', demo: '/demos/freelancer' },
 ];
 
 function Check() {
@@ -132,8 +136,14 @@ export function Portfolio({ year }: { year: number }) {
 
       <header className="site-header sticky top-0 z-30">
         <div className={`${container} flex h-16 items-center justify-between gap-3`}>
-          <a href="#top" className="inline-flex min-h-[44px] items-center whitespace-nowrap font-display text-base font-bold tracking-tight">
-            {site.name}
+          <a href="#top" className="group inline-flex min-h-[44px] items-center gap-2.5 whitespace-nowrap font-display text-base font-bold tracking-tight">
+            <span
+              aria-hidden="true"
+              className="tilt flex h-9 w-9 items-center justify-center rounded-xl bg-accent font-display text-[0.95rem] font-extrabold tracking-tighter text-on-accent"
+            >
+              RJ
+            </span>
+            <span className="max-[400px]:sr-only">{site.name}</span>
           </a>
           <nav aria-label="Main" className="hidden items-center lg:flex">
             {navIds.map((id) => (
@@ -172,11 +182,12 @@ export function Portfolio({ year }: { year: number }) {
       <main id="main" className={`lang-fade ${fading ? 'opacity-0' : 'opacity-100'}`}>
         {/* Hero */}
         <section id="top" className="relative overflow-hidden">
-          <div aria-hidden="true" className="blob pointer-events-none absolute -right-24 -top-32 h-[420px] w-[420px] rounded-full bg-accent/20 blur-3xl" />
-          <div aria-hidden="true" className="blob blob-2 pointer-events-none absolute -left-40 top-1/2 h-[340px] w-[340px] rounded-full bg-accent/10 blur-3xl" />
+          <div aria-hidden="true" className="blob pointer-events-none absolute -right-24 -top-32 h-[420px] w-[420px] rounded-full bg-accent/10 blur-3xl" />
+          <div aria-hidden="true" className="blob blob-2 pointer-events-none absolute -left-40 top-1/2 h-[340px] w-[340px] rounded-full bg-accent/[0.06] blur-3xl" />
           <div className={`${container} relative grid items-center gap-10 pb-14 pt-6 md:grid-cols-[1.15fr_0.85fr] md:pb-24 md:pt-16`}>
             <div>
-              <p className="rise text-sm font-semibold text-accent" style={stagger(0)}>
+              <p className="rise flex items-center gap-3 font-mono text-sm font-semibold text-accent" style={stagger(0)}>
+                <span aria-hidden="true" className="h-0.5 w-8 shrink-0 rounded bg-accent" />
                 {t.hero.eyebrow}
               </p>
               <h1
@@ -245,9 +256,17 @@ export function Portfolio({ year }: { year: number }) {
                         big ? 'md:grid md:grid-cols-2' : ''
                       }`}
                     >
-                      <Frame url={c.url} className={big ? 'md:flex md:flex-col md:border-b-0 md:border-r' : ''}>
-                        <WorkPreview kind={c.kind} />
-                      </Frame>
+                      <DevicePreview
+                        kind={c.kind}
+                        title={text.title}
+                        url={c.url}
+                        href={c.href}
+                        external={c.live}
+                        demoSrc={c.demo}
+                        shots={c.shots}
+                        tall={big}
+                        labels={{ ...t.work.preview, open: text.cta, newTab: t.work.newTab }}
+                      />
                       <div className="flex flex-1 flex-col p-6 sm:p-8">
                         <span
                           className={`self-start rounded-full px-3 py-1 text-xs font-bold ${
@@ -466,9 +485,9 @@ export function Portfolio({ year }: { year: number }) {
       <footer className="border-t border-line">
         <div className={`${container} py-8 max-md:pb-28`}>
           <nav aria-label={t.contact.title}>
-            <ul className="flex flex-wrap gap-2">
+            <ul className="grid max-w-xs grid-cols-4 justify-items-start gap-3 sm:flex sm:max-w-none sm:flex-wrap">
               <li>
-                <a href={plainMail} aria-label={`${t.contact.title}: ${site.email}`} className={iconBtn}>
+                <a href={plainMail} aria-label={`${t.contact.title}: ${site.email}`} title={site.email} className={iconBtn}>
                   <LinkIcon id="email" />
                 </a>
               </li>
@@ -479,6 +498,7 @@ export function Portfolio({ year }: { year: number }) {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`${l.label} ${t.work.newTab}`}
+                    title={l.label}
                     className={iconBtn}
                   >
                     <LinkIcon id={l.id} />
