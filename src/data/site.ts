@@ -6,6 +6,8 @@ export type LinkId = 'telegram' | 'instagram' | 'x' | 'youtube' | 'tiktok' | 'gi
 export const site = {
   name: 'Ruslan Jurakulov',
   email: 'ruslanjurakulov9@gmail.com',
+  telegramUser: 'jurakulov_ruslan',
+  telegramUrl: 'https://t.me/jurakulov_ruslan',
   location: 'Uzbekistan',
   studio: {
     name: 'NightShift AI Studio',

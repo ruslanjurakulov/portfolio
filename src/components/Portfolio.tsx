@@ -117,6 +117,7 @@ export function Portfolio({ year }: { year: number }) {
   const t = dict[lang];
   const mail = `mailto:${site.email}?subject=${encodeURIComponent(t.hero.emailSubject)}&body=${encodeURIComponent(t.hero.emailBody)}`;
   const plainMail = `mailto:${site.email}`;
+  const tg = site.telegramUrl;
   const navIds = ['work', 'services', 'process', 'faq', 'contact'] as const;
 
   return (
@@ -188,7 +189,7 @@ export function Portfolio({ year }: { year: number }) {
                 {t.hero.sub}
               </p>
               <div className="rise mt-7 flex flex-col gap-3 sm:flex-row md:flex-col lg:flex-row" style={stagger(3)}>
-                <a id="hero-cta" href={mail} className={btnPrimary}>
+                <a id="hero-cta" href={tg} target="_blank" rel="noopener noreferrer" className={btnPrimary}>
                   {t.hero.cta}
                   <span className="nudge-x" aria-hidden="true">
                     →
@@ -406,7 +407,21 @@ export function Portfolio({ year }: { year: number }) {
             <p className={`reveal ${lead}`} style={stagger(1)}>
               {t.contact.text}
             </p>
-            <div className="reveal mt-8" style={stagger(2)}>
+            <div className="reveal mt-8 flex flex-col gap-3" style={stagger(2)}>
+            <a
+              href={tg}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group lift press flex flex-col gap-1 rounded-3xl bg-accent px-6 py-7 text-on-accent hover:opacity-95 sm:flex-row sm:items-center sm:justify-between sm:px-8"
+            >
+              <span className="inline-flex items-center gap-3 text-base font-bold uppercase tracking-wider">
+                <span className="tilt">
+                  <LinkIcon id="telegram" />
+                </span>
+                {t.contact.telegramCta}
+              </span>
+              <span className="break-all text-lg font-bold sm:text-2xl">@{site.telegramUser}</span>
+            </a>
             <a
               href={mail}
               className="group lift press flex flex-col gap-1 rounded-3xl bg-accent px-6 py-7 text-on-accent hover:opacity-95 sm:flex-row sm:items-center sm:justify-between sm:px-8"
@@ -490,7 +505,7 @@ export function Portfolio({ year }: { year: number }) {
         }`}
         style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
       >
-        <a href={mail} className={`${btnPrimary} w-full`} tabIndex={bar ? 0 : -1}>
+        <a href={tg} target="_blank" rel="noopener noreferrer" className={`${btnPrimary} w-full`} tabIndex={bar ? 0 : -1}>
           {t.hero.cta}
           <span className="nudge-x" aria-hidden="true">
             →

@@ -36,7 +36,7 @@ export interface Dict {
   why: { title: string; items: Item[] };
   about: { title: string; pitch: string; paragraphs: string[]; facts: { label: string; value: string }[] };
   faq: { title: string; items: { q: string; a: string }[] };
-  contact: { title: string; text: string; emailCta: string; channels: string };
+  contact: { title: string; text: string; telegramCta: string; emailCta: string; channels: string };
   footer: { rights: string; built: string };
 }
 
@@ -50,10 +50,10 @@ export const dict: Record<Lang, Dict> = {
       eyebrow: 'Ruslan Jurakulov, web developer building fast sites for small businesses',
       title: 'A fast, good-looking website for your business, built in days',
       sub: 'Landing pages and small business sites that load quickly and feel right on a phone. In Uzbek, Russian or English.',
-      cta: 'Get a free sample',
-      note: 'A short free sample for new clients.',
+      cta: 'Discuss your project',
+      note: 'I reply on Telegram or by email.',
       ctaWork: 'See my work',
-      emailSubject: 'Free sample request',
+      emailSubject: 'Website project',
       emailBody: 'Hi Ruslan,\n\nMy business:\nWhat I need:\n',
     },
     work: {
@@ -135,7 +135,6 @@ export const dict: Record<Lang, Dict> = {
     faq: {
       title: 'Questions',
       items: [
-        { q: 'What is the free sample?', a: 'New clients can ask for a short free sample first, so you can see how I work before you decide.' },
         { q: 'What do you need from me?', a: 'A few lines about your business and how people can contact you. A logo, photos or texts help if you already have them.' },
         { q: 'How long does it take?', a: 'It depends on the scope. A simple site usually takes days.' },
         { q: 'Can you change things later?', a: 'Yes. I also fix and update existing sites.' },
@@ -145,7 +144,8 @@ export const dict: Record<Lang, Dict> = {
     contact: {
       title: 'Let’s talk',
       text: 'One step: send me a short message about your business.',
-      emailCta: 'Get a free sample',
+      telegramCta: 'Message me on Telegram',
+      emailCta: 'Email me',
       channels: 'Or find NightShift AI Studio and my GitHub here',
     },
     footer: { rights: 'All rights reserved.', built: 'Built with Next.js' },
@@ -160,8 +160,8 @@ export const dict: Record<Lang, Dict> = {
       eyebrow: 'Ruslan Jurakulov, веб-разработчик: делаю быстрые сайты для малого бизнеса',
       title: 'Быстрый и красивый сайт для вашего бизнеса за считаные дни',
       sub: 'Лендинги и сайты для малого бизнеса, которые быстро грузятся и удобны на телефоне. На узбекском, русском или английском.',
-      cta: 'Получить бесплатный пример',
-      note: 'Короткий бесплатный пример для новых клиентов.',
+      cta: 'Обсудить проект',
+      note: 'Отвечаю в Telegram или по почте.',
       ctaWork: 'Мои работы',
       emailSubject: 'Бесплатный пример сайта',
       emailBody: 'Здравствуйте, Руслан!\n\nМой бизнес:\nЧто мне нужно:\n',
@@ -245,7 +245,6 @@ export const dict: Record<Lang, Dict> = {
     faq: {
       title: 'Вопросы',
       items: [
-        { q: 'Что за бесплатный пример?', a: 'Новые клиенты могут сначала попросить короткий бесплатный пример, чтобы увидеть, как я работаю, и потом решить.' },
         { q: 'Что нужно от меня?', a: 'Несколько строк о бизнесе и как с вами связаться. Логотип, фото и тексты помогут, если они уже есть.' },
         { q: 'Сколько это занимает?', a: 'Зависит от объёма. Простой сайт обычно занимает несколько дней.' },
         { q: 'Можно ли вносить изменения позже?', a: 'Да. Я также исправляю и обновляю существующие сайты.' },
@@ -255,7 +254,8 @@ export const dict: Record<Lang, Dict> = {
     contact: {
       title: 'Давайте обсудим',
       text: 'Один шаг: напишите мне пару строк о вашем бизнесе.',
-      emailCta: 'Получить бесплатный пример',
+      telegramCta: 'Написать в Telegram',
+      emailCta: 'Написать на почту',
       channels: 'Или найдите NightShift AI Studio и мой GitHub здесь',
     },
     footer: { rights: 'Все права защищены.', built: 'Сделано на Next.js' },
@@ -270,10 +270,10 @@ export const dict: Record<Lang, Dict> = {
       eyebrow: 'Ruslan Jurakulov, kichik biznes uchun tezkor saytlar yaratadigan veb-dasturchi',
       title: 'Biznesingiz uchun tez va chiroyli sayt, bir necha kunda',
       sub: 'Tez ochiladigan va telefonda qulay lending hamda kichik biznes saytlari. O‘zbek, rus yoki ingliz tilida.',
-      cta: 'Bepul namuna olish',
-      note: 'Yangi mijozlar uchun qisqa bepul namuna.',
+      cta: 'Loyihani muhokama qilish',
+      note: 'Telegram yoki email orqali javob beraman.',
       ctaWork: 'Ishlarimni ko‘rish',
-      emailSubject: 'Bepul sayt namunasi',
+      emailSubject: 'Sayt loyihasi',
       emailBody: 'Assalomu alaykum, Ruslan!\n\nBiznesim:\nNima kerak:\n',
     },
     work: {
@@ -355,7 +355,6 @@ export const dict: Record<Lang, Dict> = {
     faq: {
       title: 'Savollar',
       items: [
-        { q: 'Bepul namuna nima?', a: 'Yangi mijozlar avval qisqa bepul namuna so‘rashi mumkin, shunda qaror qilishdan oldin mening ishimni ko‘rasiz.' },
         { q: 'Mendan nima kerak?', a: 'Biznesingiz haqida bir necha qator va siz bilan qanday bog‘lanish mumkinligi. Logotip, rasm va matnlar bo‘lsa, foydali.' },
         { q: 'Qancha vaqt oladi?', a: 'Hajmiga bog‘liq. Oddiy sayt odatda bir necha kun oladi.' },
         { q: 'Keyin o‘zgartirish mumkinmi?', a: 'Ha. Mavjud saytlarni ham tuzataman va yangilayman.' },
@@ -365,7 +364,8 @@ export const dict: Record<Lang, Dict> = {
     contact: {
       title: 'Gaplashamiz',
       text: 'Bitta qadam: biznesingiz haqida qisqa xabar yuboring.',
-      emailCta: 'Bepul namuna olish',
+      telegramCta: 'Telegram’da yozish',
+      emailCta: 'Email yozish',
       channels: 'Yoki NightShift AI Studio va mening GitHub’imni shu yerdan toping',
     },
     footer: { rights: 'Barcha huquqlar himoyalangan.', built: 'Next.js bilan yaratilgan' },
