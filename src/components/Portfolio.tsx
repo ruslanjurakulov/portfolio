@@ -28,7 +28,10 @@ const btnOutline =
   'lift press inline-flex min-h-[56px] items-center justify-center rounded-full border-2 border-ink/70 px-7 text-lg font-semibold hover:bg-ink hover:text-bg';
 
 // Real screenshots of the live site. Set to null to fall back to the drawn placeholder.
-const studioShots: Shots | null = null;
+const studioShots: Shots | null = {
+  desktop: { src: '/work/nightshift-desktop.webp', width: 1280, height: 800 },
+  phone: { src: '/work/nightshift-phone.webp', width: 780, height: 1688 },
+};
 
 const work: { kind: PreviewKind; live: boolean; href: string; url: string; demo?: string; shots?: Shots }[] = [
   { kind: 'studio', live: true, href: site.studio.url, url: 'nightshift-ai.studio', shots: studioShots ?? undefined },
