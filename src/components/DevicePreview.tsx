@@ -35,7 +35,6 @@ type Props = {
   /** Real screenshots (live product). Without them the drawn placeholder is used. */
   shots?: Shots;
   labels: PreviewLabels;
-  tall?: boolean;
 };
 
 function useBox() {
@@ -61,6 +60,7 @@ function Screen({
   kind,
   shot,
   alt,
+  posterTitle,
 }: {
   view: View;
   className: string;
@@ -70,6 +70,7 @@ function Screen({
   kind: PreviewKind;
   shot?: Shot;
   alt: string;
+  posterTitle: string;
 }) {
   const [ref, box] = useBox();
   const [loaded, setLoaded] = useState(false);
@@ -88,7 +89,7 @@ function Screen({
           className="block h-full w-full object-cover object-top"
         />
       ) : (
-        <WorkPreview kind={kind} className="block h-full w-full" />
+        <WorkPreview kind={kind} title={posterTitle} />
       )}
       {demoSrc && mount && box.w > 0 && (
         <div
@@ -100,7 +101,6 @@ function Screen({
             src={demoSrc}
             title={title}
             loading="lazy"
-            sandbox="allow-scripts allow-same-origin"
             tabIndex={-1}
             onLoad={() => setLoaded(true)}
             className="pointer-events-none absolute left-0 top-0 max-w-none border-0 bg-white"
@@ -112,7 +112,7 @@ function Screen({
   );
 }
 
-export function DevicePreview({ kind, title, url, href, external, demoSrc, shots, labels, tall }: Props) {
+export function DevicePreview({ kind, title, url, href, external, demoSrc, shots, labels }: Props) {
   // Desktop without JS and on wide screens; phone on narrow screens once JS is running.
   const [view, setView] = useState<View>('desktop');
   const [near, setNear] = useState(false);
@@ -155,9 +155,7 @@ export function DevicePreview({ kind, title, url, href, external, demoSrc, shots
   }, []);
 
   const frame = (v: View) =>
-    `absolute inset-0 transition-[opacity,transform] duration-500 ease-out ${
-      view === v ? 'opacity-100 scale-100' : 'pointer-events-none scale-95 opacity-0'
-    }`;
+    `frame absolute inset-0 ${view === v ? 'opacity-100 scale-100' : 'pointer-events-none scale-95 opacity-0'}`;
   const hidden = (v: View) => (view === v ? {} : { 'aria-hidden': true as const, ...INERT });
 
   const linkCls =
@@ -177,12 +175,8 @@ export function DevicePreview({ kind, title, url, href, external, demoSrc, shots
   );
 
   return (
-    <div ref={root} className={`flex flex-col border-b border-line bg-surface ${tall ? 'md:border-b-0 md:border-r' : ''}`}>
-      <div
-        className={`relative aspect-square overflow-hidden bg-soft sm:aspect-[4/3] ${
-          tall ? 'md:aspect-auto md:min-h-[24rem] md:flex-1' : ''
-        }`}
-      >
+    <div ref={root} className="flex flex-col border-b border-line bg-surface lg:border-b-0 lg:border-r">
+      <div className="relative aspect-square overflow-hidden bg-soft sm:aspect-[4/3] lg:aspect-auto lg:min-h-[26rem] lg:flex-1">
         {/* Desktop: browser frame */}
         <div className={frame('desktop')} {...hidden('desktop')}>
           <div className="flex h-full items-center justify-center p-4">
@@ -202,6 +196,7 @@ export function DevicePreview({ kind, title, url, href, external, demoSrc, shots
                 kind={kind}
                 shot={shots?.desktop}
                 alt={labels.shotDesktop}
+                posterTitle={title}
               />
             </div>
           </div>
@@ -220,6 +215,7 @@ export function DevicePreview({ kind, title, url, href, external, demoSrc, shots
                 kind={kind}
                 shot={shots?.phone}
                 alt={labels.shotPhone}
+                posterTitle={title}
               />
               <span aria-hidden="true" className="absolute left-1/2 top-[11px] h-1.5 w-10 -translate-x-1/2 rounded-full bg-black/70" />
             </div>

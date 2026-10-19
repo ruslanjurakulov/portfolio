@@ -2,47 +2,76 @@
 @tailwind components;
 @tailwind utilities;
 
-/*
- * Design tokens as space-separated RGB so Tailwind can add alpha.
- * Portfolio = ink on warm paper with a teal accent.
- * Demo pages override the same tokens on their own wrapper class.
- */
+/* ==========================================================================
+ * Portfolio design tokens
+ * Colours are space-separated RGB so Tailwind can add alpha.
+ * Light = warm paper, green-black ink, one teal accent. Dark = green-black, mint accent.
+ * The "deep" pair is a dark green panel used for the contact section in both themes.
+ * Demo pages override the same tokens on their own wrapper class (.theme-cafe / .theme-freelancer).
+ * ======================================================================== */
 :root {
   color-scheme: light dark;
-  --bg: 247 245 240;
-  --surface: 255 255 255;
-  --ink: 21 22 28;
-  --muted: 86 90 102;
-  --line: 226 223 214;
-  --accent: 14 110 102;
+  --bg: 244 241 234;
+  --surface: 252 251 247;
+  --ink: 12 22 20;
+  --muted: 80 92 88;
+  --line: 213 217 207;
+  --accent: 12 110 100;
   --on-accent: 255 255 255;
-  --soft: 226 244 241;
-  --font-display: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --font-body: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+  --soft: 228 236 229;
+  --deep: 8 38 34;
+  --on-deep: 232 244 239;
+  --mint: 94 234 212;
+
+  --font-display: 'Geologica', 'Geologica Fallback', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-body: 'Geologica', 'Geologica Fallback', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+
+  /* Motion language: every duration and easing on the site comes from here. */
+  --dur-micro: 160ms; /* hover, press */
+  --dur-short: 320ms; /* small state changes */
+  --dur-base: 560ms; /* reveals */
+  --dur-long: 900ms; /* hero, section titles, springs */
+  --stagger: 70ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in: cubic-bezier(0.64, 0, 0.78, 0);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+/* Real spring (damped, ~8% overshoot) where linear() easing exists; the bezier above is the fallback. */
+@supports (transition-timing-function: linear(0, 1)) {
+  :root {
+    --ease-spring: linear(0, 0.019, 0.068, 0.139, 0.226, 0.321, 0.419, 0.516, 0.609, 0.695, 0.773, 0.842, 0.902, 0.952, 0.992, 1.024, 1.048, 1.065, 1.076, 1.082, 1.084, 1.082, 1.078, 1.072, 1.064, 1.056, 1.048, 1.04, 1.032, 1.025, 1.019, 1.013, 1.008, 1.004, 1, 0.998, 1);
+  }
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --bg: 13 14 18;
-    --surface: 22 24 31;
-    --ink: 236 234 228;
-    --muted: 163 167 179;
-    --line: 42 45 56;
+    --bg: 9 14 13;
+    --surface: 16 24 22;
+    --ink: 232 240 236;
+    --muted: 150 166 160;
+    --line: 34 48 44;
     --accent: 45 212 191;
-    --on-accent: 13 14 18;
-    --soft: 17 38 40;
+    --on-accent: 5 22 20;
+    --soft: 14 32 29;
+    --deep: 13 40 36;
+    --on-deep: 232 244 239;
+    --mint: 94 234 212;
   }
 }
 :root[data-theme='dark'] {
-  --bg: 13 14 18;
-  --surface: 22 24 31;
-  --ink: 236 234 228;
-  --muted: 163 167 179;
-  --line: 42 45 56;
+  --bg: 9 14 13;
+  --surface: 16 24 22;
+  --ink: 232 240 236;
+  --muted: 150 166 160;
+  --line: 34 48 44;
   --accent: 45 212 191;
-  --on-accent: 13 14 18;
-  --soft: 17 38 40;
+  --on-accent: 5 22 20;
+  --soft: 14 32 29;
+  --deep: 13 40 36;
+  --on-deep: 232 244 239;
+  --mint: 94 234 212;
 }
 
 :root[data-theme='light'] {
@@ -52,23 +81,36 @@
   color-scheme: dark;
 }
 
-/* Theme toggle icon: moon in light, sun in dark (pure CSS so there is no icon flash) */
-.i-sun {
-  display: none;
+/* ---------- Font: Geologica (SIL OFL 1.1, see /public/fonts/Geologica-OFL.txt), self-hosted ---------- */
+@font-face {
+  font-family: 'Geologica';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/geologica-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .i-sun {
-    display: block;
-  }
-  :root:not([data-theme='light']) .i-moon {
-    display: none;
-  }
+@font-face {
+  font-family: 'Geologica';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/geologica-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
-:root[data-theme='dark'] .i-sun {
-  display: block;
+@font-face {
+  font-family: 'Geologica';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/geologica-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
-:root[data-theme='dark'] .i-moon {
-  display: none;
+/* Metric-adjusted system fallback so text does not jump when the web font arrives. */
+@font-face {
+  font-family: 'Geologica Fallback';
+  src: local('Arial'), local('Liberation Sans'), local('Helvetica');
+  size-adjust: 108%;
 }
 
 /* Concept demo: warm cafe, serif headings */
@@ -82,6 +124,7 @@
   --on-accent: 255 255 255;
   --soft: 244 228 202;
   --font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, 'Times New Roman', serif;
+  --font-body: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) .theme-cafe {
@@ -117,6 +160,7 @@
   --on-accent: 11 11 15;
   --soft: 255 225 77;
   --font-display: ui-rounded, 'SF Pro Rounded', 'Hiragino Maru Gothic ProN', Quicksand, 'Segoe UI', system-ui, sans-serif;
+  --font-body: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) .theme-freelancer {
@@ -139,6 +183,43 @@
   --accent: 255 90 95;
   --on-accent: 11 11 15;
   --soft: 255 225 77;
+}
+
+/* Theme toggle icon: moon in light, sun in dark (pure CSS so there is no icon flash) */
+.i-sun {
+  display: none;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .i-sun {
+    display: block;
+  }
+  :root:not([data-theme='light']) .i-moon {
+    display: none;
+  }
+}
+:root[data-theme='dark'] .i-sun {
+  display: block;
+}
+:root[data-theme='dark'] .i-moon {
+  display: none;
+}
+/* The motion toggle only means something with JS on; hidden otherwise */
+html:not(.js) .motion-toggle {
+  display: none;
+}
+/* Static BuildGraphic shows the finished page: no playhead */
+html:not(.mo) .bgfx .ph {
+  display: none;
+}
+/* Motion toggle icon: pause while motion is on, play while it is paused */
+.i-play {
+  display: none;
+}
+html:not(.mo) .i-play {
+  display: block;
+}
+html:not(.mo) .i-pause {
+  display: none;
 }
 
 @layer base {
@@ -164,7 +245,11 @@
     outline: 3px solid rgb(var(--accent));
     outline-offset: 3px;
     border-radius: 4px;
-    animation: ring 0.18s ease-out;
+    animation: ring var(--dur-micro) var(--ease-out);
+  }
+  .on-dark :focus-visible,
+  .deep :focus-visible {
+    outline-color: rgb(var(--mint));
   }
   .on-dark :focus-visible {
     outline-color: #fff;
@@ -175,7 +260,9 @@
   }
 }
 
-/* ---------- Components ---------- */
+/* ==========================================================================
+ * Components
+ * ======================================================================== */
 @layer components {
   /* Header: solid by default, so it is readable without JS; JS makes it transparent at the top. */
   .site-header {
@@ -189,17 +276,16 @@
     border-bottom-color: transparent;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-    transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+    transition: background-color var(--dur-short), border-color var(--dur-short), box-shadow var(--dur-short);
   }
   .js[data-scrolled] .site-header {
-    background: rgb(var(--bg) / 0.95);
+    background: rgb(var(--bg) / 0.92);
     border-bottom-color: rgb(var(--line));
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 8px 24px -16px rgb(0 0 0 / 0.35);
   }
 
-  /* Animated nav underline (transform only) */
+  /* Animated nav underline (transform only); stays drawn for the current section */
   .navlink {
     position: relative;
   }
@@ -214,11 +300,15 @@
     background: rgb(var(--accent));
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform var(--dur-short) var(--ease-out);
   }
   .navlink:hover::after,
-  .navlink:focus-visible::after {
+  .navlink:focus-visible::after,
+  .navlink[aria-current]::after {
     transform: scaleX(1);
+  }
+  .navlink[aria-current] {
+    color: rgb(var(--ink));
   }
 
   /* Text links stay underlined; the underline thickens on hover/focus */
@@ -226,7 +316,7 @@
     text-decoration-line: underline;
     text-decoration-thickness: 2px;
     text-underline-offset: 4px;
-    transition: text-decoration-thickness 0.2s, text-underline-offset 0.2s;
+    transition: text-decoration-thickness var(--dur-micro), text-underline-offset var(--dur-micro);
   }
   .ulink:hover,
   .ulink:focus-visible {
@@ -236,13 +326,503 @@
 
   .lift,
   .press {
-    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s, border-color 0.3s, background-color 0.2s,
-      color 0.2s, opacity 0.2s;
+    transition: transform var(--dur-short) var(--ease-out), box-shadow var(--dur-short), border-color var(--dur-short),
+      background-color var(--dur-micro), color var(--dur-micro), opacity var(--dur-micro);
   }
   .nudge-x,
   .nudge-up {
     display: inline-flex;
-    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform var(--dur-short) var(--ease-out);
+  }
+
+  /* Magnetic elements follow the pointer through the independent `translate` property,
+     so they do not fight with the hover/press `transform`. */
+  [data-magnetic] {
+    transition: translate var(--dur-short) var(--ease-spring);
+  }
+
+  /* Button shine: a soft highlight that sweeps across on hover */
+  .shine {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .shine::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(100deg, transparent 30%, rgb(255 255 255 / 0.28) 50%, transparent 70%);
+    transform: translate3d(-120%, 0, 0);
+  }
+
+  /* ---------- Split text: words sit in a mask and rise into place ---------- */
+  .w {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    padding: 0.1em 0.04em 0.18em;
+    margin: -0.1em -0.04em -0.18em;
+  }
+  .wi {
+    display: inline-block;
+  }
+  .wi.acc {
+    color: rgb(var(--accent));
+  }
+
+  /* ---------- Hero ---------- */
+  .hero-title {
+    font-size: clamp(2.3rem, 1.1rem + 4.6vw, 4.5rem);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+    font-weight: 700;
+  }
+  .hero-grid {
+    position: absolute;
+    inset: -80px 0;
+    pointer-events: none;
+    background-image: linear-gradient(rgb(var(--line) / 0.7) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(var(--line) / 0.7) 1px, transparent 1px);
+    background-size: 56px 56px;
+    -webkit-mask-image: radial-gradient(ellipse 80% 70% at 70% 40%, #000 20%, transparent 75%);
+    mask-image: radial-gradient(ellipse 80% 70% at 70% 40%, #000 20%, transparent 75%);
+  }
+  .live-dot {
+    position: relative;
+    display: inline-block;
+    height: 0.6rem;
+    width: 0.6rem;
+    border-radius: 9999px;
+    background: rgb(var(--accent));
+  }
+  .live-dot::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: rgb(var(--accent));
+  }
+
+  /* Cycling words: all three share one grid cell, so the line never changes height */
+  .rot {
+    display: inline-grid;
+  }
+  .rot-item {
+    grid-area: 1 / 1;
+    justify-self: start;
+    position: relative;
+    isolation: isolate;
+  }
+  .rot-item + .rot-item {
+    visibility: hidden; /* static state shows the first phrase only */
+  }
+  .rw {
+    display: inline-block;
+    white-space: nowrap;
+  }
+  .rc {
+    display: inline-block;
+  }
+  .rot-item::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    left: -0.1em;
+    right: -0.1em;
+    bottom: 0.04em;
+    height: 0.34em;
+    border-radius: 0.1em;
+    background: rgb(var(--accent) / 0.28);
+    transform-origin: left center;
+  }
+
+  /* ---------- Marquee (services ticker). Static, wrapped list unless motion is on. ---------- */
+  .mq {
+    overflow: hidden;
+    background: rgb(var(--accent));
+    color: rgb(var(--on-accent));
+  }
+  .mq-track {
+    display: flex;
+    width: auto;
+  }
+  .mq-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 0.5rem 0;
+    margin: 0;
+    padding: 0.9rem 1rem;
+    list-style: none;
+  }
+  .mq-list li {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 0.9rem + 1.6vw, 2.1rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .mq-list li::after {
+    content: '';
+    flex-shrink: 0;
+    width: 0.5em;
+    height: 0.5em;
+    margin: 0 clamp(1rem, 3vw, 2.2rem);
+    background: currentColor;
+    clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+  }
+  .mq-dup {
+    display: none;
+  }
+
+  /* ---------- Stats ---------- */
+  .stat-n {
+    font-family: var(--font-display);
+    font-size: clamp(3.2rem, 2rem + 5vw, 5.6rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.05em;
+    font-variant-numeric: tabular-nums;
+    color: rgb(var(--accent));
+  }
+
+  /* ---------- Section heads ---------- */
+  .sh-title {
+    font-size: clamp(2rem, 1rem + 3.6vw, 3.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-weight: 700;
+  }
+  .sh-idx {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: rgb(var(--accent));
+  }
+  .sh-line {
+    display: block;
+    height: 2px;
+    width: 4.5rem;
+    margin-top: 1.1rem;
+    border-radius: 2px;
+    background: rgb(var(--accent));
+    transform-origin: left center;
+  }
+  .bgnum {
+    position: absolute;
+    right: -0.04em;
+    top: 0.5rem;
+    z-index: 0;
+    pointer-events: none;
+    user-select: none;
+    font-family: var(--font-display);
+    font-size: clamp(8rem, 4rem + 18vw, 20rem);
+    font-weight: 800;
+    line-height: 0.8;
+    letter-spacing: -0.06em;
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgb(var(--line));
+    opacity: 0.9;
+  }
+
+  /* ---------- Work: sticky stacking ---------- */
+  .stack {
+    display: grid;
+    gap: 1.5rem;
+  }
+  .stack-card {
+    position: relative;
+    transform-origin: 50% 0;
+  }
+  /* A layer that darkens a card while the next one slides over it (opacity set from JS) */
+  .stack-dim {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    border-radius: inherit;
+    pointer-events: none;
+    background: rgb(var(--bg));
+    opacity: 0;
+  }
+  @media (min-width: 1024px) and (min-height: 760px) {
+    .stack {
+      gap: 2.5rem;
+    }
+    .stack > li {
+      position: sticky;
+      top: calc(5.25rem + var(--k, 0) * 0.9rem);
+    }
+  }
+
+  /* Poster shown inside a preview frame until the real screenshot / live demo is there */
+  .poster {
+    position: relative;
+    container-type: inline-size;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    padding: 8% 7%;
+    background: rgb(var(--bg));
+    color: rgb(var(--ink));
+  }
+  .poster-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 5cqw, 2.6rem);
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+  }
+  .poster-mark {
+    align-self: flex-start;
+    height: 28%;
+    aspect-ratio: 1;
+    border-radius: 9999px;
+    background: rgb(var(--accent));
+  }
+  .poster-tag {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgb(var(--muted));
+  }
+
+  /* ---------- Services ---------- */
+  .svc {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .svc::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: rgb(var(--soft));
+    transform: scaleY(0);
+    transform-origin: 50% 100%;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+  .ico {
+    width: 3rem;
+    height: 3rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* ---------- Spotlight inside cards (follows the pointer; pointer devices with motion on) ---------- */
+  @media (hover: hover) and (pointer: fine) {
+    .mo [data-spot]::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 0;
+      width: 360px;
+      height: 360px;
+      border-radius: 9999px;
+      pointer-events: none;
+      background: radial-gradient(closest-side, rgb(var(--accent) / 0.16), transparent);
+      translate: calc(var(--sx, -999px) - 180px) calc(var(--sy, -999px) - 180px);
+      opacity: 0;
+      transition: opacity var(--dur-short);
+    }
+    .mo [data-spot]:hover::before {
+      opacity: 1;
+    }
+  }
+
+  /* ---------- Process ---------- */
+  .steps-line {
+    position: absolute;
+    background: rgb(var(--accent));
+    transform-origin: left center;
+  }
+
+  /* ---------- FAQ ---------- */
+  .faq-vbar {
+    transform-origin: center;
+    transition: transform var(--dur-short) var(--ease-out);
+  }
+  details[open] .faq-vbar {
+    transform: scaleY(0);
+  }
+
+  /* ---------- Contact ---------- */
+  .deep {
+    background: rgb(var(--deep));
+    color: rgb(var(--on-deep));
+  }
+  .rings circle {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  .deep .sh-idx {
+    color: rgb(var(--mint));
+  }
+  .deep .sh-line {
+    background: rgb(var(--mint));
+  }
+
+  /* ---------- Page chrome: progress, rail, cursor glow ---------- */
+  .pbar {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 60;
+    height: 3px;
+    background: rgb(var(--accent));
+    transform: scaleX(0);
+    transform-origin: left center;
+    pointer-events: none;
+  }
+  .rail {
+    position: fixed;
+    right: 10px;
+    top: 50%;
+    z-index: 20;
+    display: none;
+    translate: 0 -50%;
+  }
+  @media (min-width: 1100px) {
+    .js .rail {
+      display: block;
+    }
+  }
+  .rail-track {
+    position: absolute;
+    right: 21px;
+    top: 22px;
+    bottom: 22px;
+    width: 2px;
+    background: rgb(var(--line));
+  }
+  .rail-fill {
+    position: absolute;
+    inset: 0;
+    background: rgb(var(--accent));
+    transform: scaleY(0);
+    transform-origin: top center;
+  }
+  .rail a {
+    position: relative;
+    display: flex;
+    height: 44px;
+    width: 44px;
+    align-items: center;
+    justify-content: center;
+  }
+  .rail-dot {
+    height: 10px;
+    width: 10px;
+    border-radius: 9999px;
+    border: 2px solid rgb(var(--muted));
+    background: rgb(var(--bg));
+    transition: transform var(--dur-short) var(--ease-spring), background-color var(--dur-micro), border-color var(--dur-micro);
+  }
+  .rail a[aria-current] .rail-dot {
+    background: rgb(var(--accent));
+    border-color: rgb(var(--accent));
+    transform: scale(1.5);
+  }
+  .rail-label {
+    position: absolute;
+    right: 46px;
+    white-space: nowrap;
+    padding: 0.2rem 0.6rem;
+    border-radius: 9999px;
+    background: rgb(var(--ink));
+    color: rgb(var(--bg));
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    opacity: 0;
+    translate: 8px 0;
+    pointer-events: none;
+    transition: opacity var(--dur-micro), translate var(--dur-short) var(--ease-out);
+  }
+  .rail a:hover .rail-label {
+    opacity: 1;
+    translate: 0 0;
+  }
+  .glow {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 50;
+    display: none;
+    width: 560px;
+    height: 560px;
+    margin: -280px 0 0 -280px;
+    border-radius: 9999px;
+    pointer-events: none;
+    background: radial-gradient(closest-side, rgb(var(--accent) / 0.13), transparent);
+    opacity: 0;
+    transition: opacity var(--dur-long);
+    will-change: transform;
+  }
+  .glow.on {
+    opacity: 1;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .mo .glow {
+      display: block;
+    }
+  }
+
+  /* BuildGraphic (authored SVG) static styling; its animation is in build-graphic.css and motion block below */
+  .bgfx {
+    --c: rgb(var(--ink));
+    --loop: 10s;
+    overflow: visible;
+  }
+  .bgfx .s {
+    fill: none;
+    stroke: var(--c);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .bgfx .s.fx {
+    fill: var(--c);
+  }
+  .bgfx .s.fs {
+    fill: rgb(var(--surface));
+  }
+  .bgfx .k {
+    --c: rgb(var(--ink));
+  }
+  .bgfx .a {
+    --c: rgb(var(--accent));
+  }
+  .bgfx .m {
+    --c: rgb(var(--muted) / 0.55);
+  }
+  .bgfx .g {
+    --c: rgb(var(--line));
+  }
+  .bgfx text {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    fill: rgb(var(--ink));
+  }
+  .bgfx .lbl {
+    font-size: 12px;
+    fill: rgb(var(--muted));
+  }
+  .bgfx .chip {
+    font-size: 11px;
   }
 }
 
@@ -251,118 +831,285 @@
     box-shadow: 0 18px 40px -18px rgb(var(--accent) / 0.55);
     border-color: rgb(var(--accent) / 0.65);
   }
-}
-
-/* ---------- Motion (everything below is off under prefers-reduced-motion) ---------- */
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    scroll-behavior: smooth;
-  }
-
-  /* Scroll reveal: hidden only after JS has marked the page (.js), then shown with .in */
-  .js .reveal {
-    opacity: 0;
-    transform: translate3d(0, var(--rv-y, 18px), 0) scale(var(--rv-s, 1));
-    transition: opacity var(--rv-d, 0.7s) cubic-bezier(0.22, 1, 0.36, 1),
-      transform var(--rv-d, 0.7s) var(--rv-e, cubic-bezier(0.22, 1, 0.36, 1));
-    transition-delay: calc(var(--i, 0) * 70ms);
-    will-change: opacity, transform;
-  }
-  .js .reveal.in {
-    opacity: 1;
-    transform: none;
-    will-change: auto;
-  }
-
-  /* Hero entrance (CSS only, works before hydration) */
-  .rise {
-    animation: rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
-    animation-delay: calc(var(--i, 0) * 90ms + 60ms);
-  }
-  .blob {
-    animation: drift 18s ease-in-out infinite alternate;
-  }
-  .blob-2 {
-    animation-duration: 24s;
-    animation-direction: alternate-reverse;
-  }
-  .float {
-    animation: float 7s ease-in-out infinite;
-  }
-  .steam {
-    animation: steam 4s ease-in-out infinite;
-  }
-  .steam:nth-of-type(2) {
-    animation-delay: 1.3s;
-  }
-  .steam:nth-of-type(3) {
-    animation-delay: 2.6s;
-  }
-
-  .lang-fade {
-    transition: opacity 0.16s ease;
-  }
-
-  /* Hover (pointer devices only) and press feedback */
-  @media (hover: hover) {
-    .lift:hover {
-      transform: translate3d(0, -4px, 0);
-    }
-    .group:hover .nudge-x,
-    .group:focus-visible .nudge-x {
-      transform: translate3d(4px, 0, 0);
-    }
-    .group:hover .nudge-up,
-    .group:focus-visible .nudge-up {
-      transform: translate3d(2px, -2px, 0);
-    }
-    .group:hover .zoom {
-      transform: scale(1.04);
-    }
-    .group:hover .tilt {
-      transform: rotate(-10deg) scale(1.1);
-    }
-  }
-  .press:active {
-    transform: scale(0.97);
-  }
-  .zoom {
-    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .tilt {
-    display: inline-flex;
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  /* Cafe: slower, softer */
-  .theme-cafe {
-    --rv-d: 0.95s;
-    --rv-y: 14px;
-  }
-
-  /* Freelancer: snappy pop with overshoot, hard shadows that press in */
-  .theme-freelancer {
-    --rv-d: 0.55s;
-    --rv-y: 28px;
-    --rv-s: 0.94;
-    --rv-e: cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-  @media (hover: hover) {
-    .theme-freelancer .lift:hover {
-      transform: translate3d(-2px, -2px, 0);
-      box-shadow: 7px 7px 0 0 rgb(var(--ink));
-      border-color: rgb(var(--ink));
-    }
-    .theme-freelancer .chip:hover {
-      transform: rotate(-3deg) translate3d(0, -2px, 0);
-    }
-  }
-  .theme-freelancer .press:active {
-    transform: translate3d(3px, 3px, 0);
-    box-shadow: 1px 1px 0 0 rgb(var(--ink));
+  .svc:hover::before {
+    transform: scaleY(1);
   }
 }
 
+/* ==========================================================================
+ * Motion. Everything below needs class `mo` on <html>, which the pre-paint script sets only when
+ * the visitor has NOT asked for reduced motion and has not paused animations. Without `mo` the page
+ * is static and fully visible. Only transform and opacity are animated, except the stroke draw of the
+ * small BuildGraphic SVG.
+ * ======================================================================== */
+
+/* Scroll reveal: hidden only once JS is running (.js) and motion is on (.mo) */
+.js.mo .reveal {
+  opacity: 0;
+  transform: translate3d(0, var(--rv-y, 22px), 0) scale(var(--rv-s, 1));
+  transition: opacity var(--dur-base) var(--ease-out), transform var(--rv-d, var(--dur-long)) var(--rv-e, var(--ease-spring));
+  transition-delay: calc(var(--i, 0) * var(--stagger));
+}
+.js.mo .reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Section titles: words slide up out of a mask, the rule draws, the index slides in */
+.js.mo .rt .wi {
+  transform: translate3d(0, 112%, 0) rotate(5deg);
+  transition: transform var(--dur-long) var(--ease-spring);
+  transition-delay: calc(var(--i, 0) * 55ms + 60ms);
+}
+.js.mo .rt.in .wi {
+  transform: none;
+}
+.js.mo .rt .sh-line {
+  transform: scaleX(0);
+  transition: transform var(--dur-long) var(--ease-out) 260ms;
+}
+.js.mo .rt.in .sh-line {
+  transform: scaleX(1);
+}
+.js.mo .rt .sh-idx {
+  opacity: 0;
+  translate: -12px 0;
+  transition: opacity var(--dur-base) var(--ease-out), translate var(--dur-base) var(--ease-out);
+}
+.js.mo .rt.in .sh-idx {
+  opacity: 1;
+  translate: 0 0;
+}
+
+/* Hero intro: a ~1 s sequence that starts from CSS alone (before JS) and never hides anything for long */
+.mo .hero-title .wi {
+  animation: word-up 800ms var(--ease-spring) both;
+  animation-delay: calc(var(--i, 0) * 40ms + 80ms);
+}
+.mo .rise {
+  animation: rise var(--dur-base) var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 70ms + 40ms);
+}
+.mo .live-dot::after {
+  animation: ping 2.4s var(--ease-out) infinite;
+}
+.mo .hero-grid {
+  animation: fade-in var(--dur-long) var(--ease-out) both;
+}
+
+/* Cycling words (three phrases, 3 s each) */
+.mo .rot-item + .rot-item {
+  visibility: visible;
+}
+.mo .rc {
+  animation: rot-char 9s var(--ease-spring) infinite both;
+  animation-delay: calc(var(--w, 0) * 3s + 0.55s + var(--ci, 0) * 28ms);
+}
+.mo .rot-item::before {
+  animation: rot-mark 9s var(--ease-out) infinite both;
+  animation-delay: calc(var(--w, 0) * 3s + 0.55s + 0.12s);
+}
+
+/* Marquee */
+.mo .mq-track {
+  width: max-content;
+  animation: mq 48s linear infinite;
+}
+.mo .mq-list {
+  flex-wrap: nowrap;
+}
+.mo .mq-dup {
+  display: flex;
+}
+.mo .mq:hover .mq-track {
+  animation-play-state: paused;
+}
+/* Off-screen blocks pause their loops (set from Choreo) */
+[data-off] .bgfx *,
+[data-off] .rc,
+[data-off] .rot-item::before,
+[data-off] .mq-track,
+[data-off] .rings circle,
+[data-off] .live-dot::after {
+  animation-play-state: paused !important;
+}
+
+/* Hover and press micro-interactions (pointer devices only) */
+@media (hover: hover) {
+  .mo .lift:hover {
+    transform: translate3d(0, -4px, 0);
+  }
+  .mo .group:hover .nudge-x,
+  .mo .group:focus-visible .nudge-x {
+    transform: translate3d(5px, 0, 0);
+  }
+  .mo .group:hover .nudge-up,
+  .mo .group:focus-visible .nudge-up {
+    transform: translate3d(3px, -3px, 0);
+  }
+  .mo .group:hover .tilt {
+    transform: rotate(-10deg) scale(1.12);
+  }
+  .mo .shine:hover::after {
+    transform: translate3d(120%, 0, 0);
+    transition: transform 700ms var(--ease-out);
+  }
+  .mo .svc:hover .ico path,
+  .mo .svc:hover .ico circle,
+  .mo .svc:hover .ico rect {
+    animation: redraw 700ms var(--ease-out) both;
+  }
+}
+.mo .press:active {
+  transform: scale(0.97);
+}
+.zoom {
+  transition: transform 700ms var(--ease-out);
+}
+.tilt {
+  display: inline-flex;
+  transition: transform var(--dur-short) var(--ease-spring);
+}
+
+/* Line icons draw themselves once when their card is revealed */
+.js.mo .reveal .ico * {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+.js.mo .reveal.in .ico * {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 900ms var(--ease-inout) calc(var(--i, 0) * 80ms + 200ms);
+}
+
+/* Work-card preview: desktop and phone frames swap with a spring */
+.mo .frame {
+  transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-long) var(--ease-spring);
+}
+
+/* Process line: scrubbed with scroll (--p set from JS, 0..1) */
+.mo .steps-line {
+  transform: scaleX(var(--p, 1));
+}
+
+/* FAQ answer */
+.mo details[open] .faq-a {
+  animation: rise var(--dur-base) var(--ease-out) both;
+}
+
+/* Parallax layers: --p is the hero's exit progress (0..1), set from JS */
+.mo .par-1 {
+  transform: translate3d(0, calc(var(--p, 0) * -70px), 0);
+}
+.mo .par-2 {
+  transform: translate3d(0, calc(var(--p, 0) * 40px), 0);
+}
+.mo .par-3 {
+  transform: translate3d(0, calc(var(--p, 0) * -24px), 0);
+}
+.mo .bgnum {
+  translate: 0 calc((var(--p, 0.5) - 0.5) * -90px);
+}
+
+/* Contact rings: slow concentric pulses */
+.mo .rings circle {
+  animation: ring-out 5.4s var(--ease-out) infinite both;
+  animation-delay: calc(var(--i, 0) * 1.8s);
+}
+
+/* Language switch cross-fade */
+.mo .lang-fade {
+  transition: opacity 0.16s ease;
+}
+
+/* BuildGraphic loop, one shared 10 s timeline (per-block keyframes in build-graphic.css) */
+.mo .bgfx .s {
+  stroke-dasharray: 1;
+}
+.mo .bgfx .bk {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.mo .bgfx .scan {
+  transform-box: fill-box;
+  animation: scan var(--loop) var(--ease-inout) infinite both;
+}
+.mo .bgfx .done {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: done-t var(--loop) linear infinite both, done-o var(--loop) linear infinite both;
+}
+.mo .bgfx .done .s {
+  animation: done-d var(--loop) var(--ease-inout) infinite both;
+}
+.mo .bgfx .tl {
+  animation: tl-o var(--loop) linear infinite both;
+}
+.mo .bgfx .tl-fill {
+  animation: tl-fill var(--loop) var(--ease-inout) infinite both;
+}
+.mo .bgfx .ph {
+  animation: ph var(--loop) var(--ease-inout) infinite both;
+}
+.mo .bgfx .st1 {
+  animation: st1 var(--loop) linear infinite both;
+}
+.mo .bgfx .st2 {
+  animation: st2 var(--loop) linear infinite both;
+}
+.mo .bgfx .st3 {
+  animation: st3 var(--loop) linear infinite both;
+}
+.mo .bgfx .marks .s {
+  animation: marks-d var(--loop) var(--ease-inout) infinite both;
+}
+.mo .bgfx .marks {
+  animation: marks-o var(--loop) linear infinite both;
+}
+
+/* Concept demos keep their own motion personality through the same tokens */
+.theme-cafe {
+  --rv-d: 1100ms;
+  --rv-y: 14px;
+  --rv-e: var(--ease-out);
+}
+.theme-freelancer {
+  --rv-d: 650ms;
+  --rv-y: 30px;
+  --rv-s: 0.94;
+  --rv-e: var(--ease-spring);
+}
+@media (hover: hover) {
+  .mo .theme-freelancer .lift:hover {
+    transform: translate3d(-2px, -2px, 0);
+    box-shadow: 7px 7px 0 0 rgb(var(--ink));
+    border-color: rgb(var(--ink));
+  }
+  .mo .theme-freelancer .chip:hover {
+    transform: rotate(-3deg) translate3d(0, -2px, 0);
+  }
+}
+.mo .theme-freelancer .press:active {
+  transform: translate3d(3px, 3px, 0);
+  box-shadow: 1px 1px 0 0 rgb(var(--ink));
+}
+.mo .float {
+  animation: float 7s ease-in-out infinite;
+}
+.mo .steam {
+  animation: steam 4s ease-in-out infinite;
+}
+.mo .steam:nth-of-type(2) {
+  animation-delay: 1.3s;
+}
+.mo .steam:nth-of-type(3) {
+  animation-delay: 2.6s;
+}
+
+html.mo {
+  scroll-behavior: smooth;
+}
+
+/* Safety net: if the OS asks for reduced motion, nothing moves, whatever else is set */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -371,8 +1118,12 @@
     transition: none !important;
     scroll-behavior: auto !important;
   }
+  .motion-toggle {
+    display: none !important;
+  }
 }
 
+/* ---------- Keyframes ---------- */
 @keyframes rise {
   from {
     opacity: 0;
@@ -383,14 +1134,101 @@
     transform: none;
   }
 }
+@keyframes word-up {
+  from {
+    transform: translate3d(0, 112%, 0) rotate(5deg);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
 @keyframes drift {
   to {
     transform: translate3d(-48px, 36px, 0) scale(1.15);
   }
 }
+@keyframes ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  80%,
+  100% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}
 @keyframes ring {
   from {
     outline-offset: 0;
+  }
+}
+@keyframes mq {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+@keyframes rot-char {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 70%, 0) rotate(8deg);
+  }
+  4%,
+  28% {
+    opacity: 1;
+    transform: none;
+  }
+  32% {
+    opacity: 0;
+    transform: translate3d(0, -70%, 0) rotate(-8deg);
+    animation-timing-function: var(--ease-in);
+  }
+  32.01%,
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 70%, 0) rotate(8deg);
+  }
+}
+@keyframes rot-mark {
+  0% {
+    transform: scaleX(0);
+    opacity: 1;
+  }
+  8%,
+  28% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  32%,
+  100% {
+    transform: scaleX(1);
+    opacity: 0;
+  }
+}
+@keyframes redraw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes ring-out {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
   }
 }
 @keyframes steam {
@@ -411,5 +1249,152 @@
   }
   50% {
     transform: translateY(-8px);
+  }
+}
+
+/* BuildGraphic shared pieces */
+@keyframes scan {
+  0%,
+  34% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+  36% {
+    opacity: 1;
+  }
+  58% {
+    transform: translate3d(408px, 0, 0);
+    opacity: 1;
+  }
+  60%,
+  100% {
+    transform: translate3d(408px, 0, 0);
+    opacity: 0;
+  }
+}
+@keyframes done-t {
+  0%,
+  58% {
+    transform: scale(0.5);
+    animation-timing-function: var(--ease-spring);
+  }
+  68%,
+  100% {
+    transform: none;
+  }
+}
+@keyframes done-o {
+  0%,
+  58% {
+    opacity: 0;
+  }
+  61%,
+  90% {
+    opacity: 1;
+  }
+  96%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes done-d {
+  0%,
+  60% {
+    stroke-dashoffset: 1;
+  }
+  70%,
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes tl-o {
+  0%,
+  2% {
+    opacity: 0;
+  }
+  6%,
+  90% {
+    opacity: 1;
+  }
+  96%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes tl-fill {
+  0%,
+  6% {
+    stroke-dashoffset: 1;
+  }
+  28%,
+  40% {
+    stroke-dashoffset: 0.5;
+  }
+  60%,
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes ph {
+  0%,
+  6% {
+    transform: translate3d(0, 0, 0);
+  }
+  28%,
+  40% {
+    transform: translate3d(200px, 0, 0);
+  }
+  60%,
+  100% {
+    transform: translate3d(400px, 0, 0);
+  }
+}
+@keyframes st1 {
+  0%,
+  6% {
+    fill-opacity: 0;
+  }
+  9%,
+  100% {
+    fill-opacity: 1;
+  }
+}
+@keyframes st2 {
+  0%,
+  27% {
+    fill-opacity: 0;
+  }
+  30%,
+  100% {
+    fill-opacity: 1;
+  }
+}
+@keyframes st3 {
+  0%,
+  59% {
+    fill-opacity: 0;
+  }
+  62%,
+  100% {
+    fill-opacity: 1;
+  }
+}
+@keyframes marks-d {
+  0% {
+    stroke-dashoffset: 1;
+  }
+  8%,
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes marks-o {
+  0%,
+  90% {
+    opacity: 1;
+  }
+  96%,
+  100% {
+    opacity: 0;
   }
 }
