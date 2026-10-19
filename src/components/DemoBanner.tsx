@@ -11,7 +11,7 @@ export function DemoBanner() {
             <strong className="font-semibold">Concept demo, fictional business.</strong>{' '}
             <span className="hidden lg:inline">Everything on this page is invented.</span>
           </p>
-          <Link href="/" className="inline-flex min-h-[44px] items-center gap-1 font-medium underline underline-offset-4">
+          <Link href="/" prefetch={false} className="inline-flex min-h-[44px] items-center gap-1 font-medium underline underline-offset-4">
             <span aria-hidden="true">←</span> Back to Ruslan’s portfolio
           </Link>
         </div>

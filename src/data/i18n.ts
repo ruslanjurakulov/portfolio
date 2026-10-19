@@ -11,10 +11,17 @@ export interface Dict {
   skip: string;
   langLabel: string;
   themeLabel: string;
+  motionLabel: string;
   nav: { work: string; services: string; process: string; faq: string; contact: string };
   hero: {
     eyebrow: string;
     title: string;
+    /** Part of `title` that is highlighted (must appear in `title` verbatim). */
+    titleAccent: string;
+    /** Lead-in for the cycling words, e.g. "I build". */
+    build: string;
+    /** Exactly three phrases; the hero cycles through them. */
+    words: string[];
     sub: string;
     cta: string;
     note: string;
@@ -32,6 +39,8 @@ export interface Dict {
     preview: { group: string; phone: string; desktop: string; shotDesktop: string; shotPhone: string };
     cards: { title: string; problem: string; built: string; tools: string; shows: string; cta: string }[];
   };
+  /** Labels for the at-a-glance numbers. The numbers themselves are counted from real data in the page. */
+  stats: { label: string; languages: string; steps: string; live: string; concept: string };
   services: { title: string; intro: string; items: Item[] };
   process: { title: string; steps: Item[] };
   why: { title: string; items: Item[] };
@@ -46,10 +55,14 @@ export const dict: Record<Lang, Dict> = {
     skip: 'Skip to content',
     langLabel: 'Language',
     themeLabel: 'Dark theme',
+    motionLabel: 'Pause animations',
     nav: { work: 'Work', services: 'Services', process: 'How it works', faq: 'FAQ', contact: 'Contact' },
     hero: {
       eyebrow: 'Hi, I’m Ruslan, a web developer from Uzbekistan',
       title: 'A fast, good-looking website for your business, built in days',
+      titleAccent: 'built in days',
+      build: 'I build',
+      words: ['landing pages', 'small business sites', 'multi-language sites'],
       sub: 'Landing pages and small business sites that load quickly and feel right on a phone. In Uzbek, Russian or English.',
       cta: 'Discuss your project',
       note: 'I reply on Telegram or by email.',
@@ -98,6 +111,7 @@ export const dict: Record<Lang, Dict> = {
         },
       ],
     },
+    stats: { label: 'At a glance', languages: 'languages', steps: 'steps from message to site', live: 'live product', concept: 'concept demos' },
     services: {
       title: 'What I can do',
       intro: 'Practical help for small businesses and solo professionals.',
@@ -163,10 +177,14 @@ export const dict: Record<Lang, Dict> = {
     skip: 'Перейти к содержимому',
     langLabel: 'Язык',
     themeLabel: 'Тёмная тема',
+    motionLabel: 'Остановить анимацию',
     nav: { work: 'Работы', services: 'Услуги', process: 'Как это работает', faq: 'Вопросы', contact: 'Контакты' },
     hero: {
       eyebrow: 'Привет, я Руслан, веб-разработчик из Узбекистана',
       title: 'Быстрый и красивый сайт для вашего бизнеса за считаные дни',
+      titleAccent: 'за считаные дни',
+      build: 'Делаю',
+      words: ['лендинги', 'сайты для малого бизнеса', 'многоязычные сайты'],
       sub: 'Лендинги и сайты для малого бизнеса, которые быстро грузятся и удобны на телефоне. На узбекском, русском или английском.',
       cta: 'Обсудить проект',
       note: 'Отвечаю в Telegram или по почте.',
@@ -215,6 +233,7 @@ export const dict: Record<Lang, Dict> = {
         },
       ],
     },
+    stats: { label: 'Коротко в цифрах', languages: 'языка', steps: 'шага от сообщения до сайта', live: 'действующий продукт', concept: 'концепт-демо' },
     services: {
       title: 'Что я умею',
       intro: 'Практическая помощь малому бизнесу и частным специалистам.',
@@ -280,10 +299,14 @@ export const dict: Record<Lang, Dict> = {
     skip: 'Asosiy mazmunga o‘tish',
     langLabel: 'Til',
     themeLabel: 'Qorong‘i rejim',
+    motionLabel: 'Animatsiyani to‘xtatish',
     nav: { work: 'Ishlar', services: 'Xizmatlar', process: 'Ish tartibi', faq: 'Savollar', contact: 'Aloqa' },
     hero: {
       eyebrow: 'Salom, men Ruslan, O‘zbekistonlik veb-dasturchiman',
       title: 'Biznesingiz uchun tez va chiroyli sayt, bir necha kunda tayyor',
+      titleAccent: 'bir necha kunda tayyor',
+      build: 'Yarataman',
+      words: ['lending sahifalar', 'kichik biznes saytlari', 'ko‘p tilli saytlar'],
       sub: 'Tez ochiladigan, telefonda qulay lending va kichik biznes saytlari. O‘zbek, rus yoki ingliz tilida.',
       cta: 'Loyihani muhokama qilaylik',
       note: 'Telegram yoki emailda javob beraman.',
@@ -332,6 +355,7 @@ export const dict: Record<Lang, Dict> = {
         },
       ],
     },
+    stats: { label: 'Qisqacha raqamlarda', languages: 'ta til', steps: 'qadamda xabardan tayyor saytgacha', live: 'ta ishlab turgan mahsulot', concept: 'ta namuna loyiha' },
     services: {
       title: 'Nimalar qila olaman',
       intro: 'Kichik biznes va yakka tartibda ishlaydigan mutaxassislar uchun amaliy yordam.',

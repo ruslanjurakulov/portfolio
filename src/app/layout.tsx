@@ -28,8 +28,8 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
   colorScheme: 'light dark',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#f7f5f0' },
-    { media: '(prefers-color-scheme: dark)', color: '#0d0e12' },
+    { media: '(prefers-color-scheme: light)', color: '#f4f1ea' },
+    { media: '(prefers-color-scheme: dark)', color: '#090e0d' },
   ],
 };
 
@@ -37,11 +37,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Pre-paint: apply a saved theme before first render so there is no flash. */}
+        {/* Pre-paint: apply a saved theme and decide whether motion is on (class `mo`) before first render. */}
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}",
+              "(function(){var d=document.documentElement,o=false;try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')d.dataset.theme=t;o=localStorage.getItem('motion')==='off'}catch(e){}try{if(!o&&!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('mo')}catch(e){}})()",
           }}
         />
       </head>
