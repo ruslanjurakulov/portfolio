@@ -50,6 +50,9 @@ export function Stage({
   className?: string;
 }) {
   const [active, setActive] = useState(0);
+  // Pictures that are not in the first view start loading once the page has settled (and this stage is shown and
+  // near the screen), or when the visitor switches view, so they never compete with the first picture.
+  const [armed, setArmed] = useState(false);
   const [views, setViews] = useState<View[]>(() => projects.map(() => 'phone'));
   const root = useRef<HTMLDivElement>(null);
   const pic = useRef<HTMLDivElement>(null);
@@ -57,6 +60,37 @@ export function Stage({
   const activeRef = useRef(0);
   const viewsRef = useRef(views);
   viewsRef.current = views;
+
+  useEffect(() => {
+    const el = root.current;
+    if (!el) return;
+    let timer = 0;
+    let io: IntersectionObserver | undefined;
+    const settle = () => {
+      timer = window.setTimeout(() => {
+        if (el.getBoundingClientRect().width === 0) return; // not shown at this width: nothing to load
+        if (mode === 'solo' && typeof IntersectionObserver !== 'undefined') {
+          io = new IntersectionObserver(
+            ([e]) => {
+              if (e.isIntersecting) {
+                setArmed(true);
+                io?.disconnect();
+              }
+            },
+            { rootMargin: '1200px 0px' },
+          );
+          io.observe(el);
+        } else setArmed(true);
+      }, 1200);
+    };
+    if (document.readyState === 'complete') settle();
+    else window.addEventListener('load', settle, { once: true });
+    return () => {
+      window.removeEventListener('load', settle);
+      window.clearTimeout(timer);
+      io?.disconnect();
+    };
+  }, [mode]);
 
   useEffect(() => {
     const html = document.documentElement;
@@ -148,6 +182,7 @@ export function Stage({
 
   const setView = (i: number, v: View) => {
     setViews((cur) => cur.map((x, k) => (k === i ? v : x)));
+    setArmed(true);
     layers.current[i]?.style.setProperty('--pan', '0');
   };
 
@@ -162,7 +197,7 @@ export function Stage({
               {/* eslint-disable @next/next/no-img-element */}
               <img
                 className="shot-phone"
-                src={p.phone.src}
+                src={i === 0 || armed ? p.phone.src : undefined}
                 width={p.phone.width}
                 height={p.phone.height}
                 alt={p.altPhone}
@@ -173,7 +208,7 @@ export function Stage({
               />
               <img
                 className="shot-desk"
-                src={p.desktop.src}
+                src={armed ? p.desktop.src : undefined}
                 width={p.desktop.width}
                 height={p.desktop.height}
                 alt={p.altDesktop}

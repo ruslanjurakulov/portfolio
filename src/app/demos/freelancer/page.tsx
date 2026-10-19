@@ -88,7 +88,7 @@ export default function FreelancerDemo() {
 
       <header className="border-b-2 border-ink">
         <div className={`${container} flex min-h-[64px] items-center justify-between gap-2`}>
-          <a href="#top" className="inline-flex min-h-[44px] items-center whitespace-nowrap text-xl font-extrabold">
+          <a href="#top" className="inline-flex min-h-[44px] items-center whitespace-nowrap text-lg font-extrabold sm:text-xl">
             Aylin Demo
           </a>
           <nav aria-label="Designer" className="flex items-center">
@@ -100,7 +100,7 @@ export default function FreelancerDemo() {
               <a
                 key={href}
                 href={href}
-                className="inline-flex min-h-[44px] items-center px-2.5 text-sm font-bold underline-offset-4 hover:underline sm:px-4 sm:text-base"
+                className="inline-flex min-h-[44px] items-center px-1.5 text-sm font-bold underline-offset-4 hover:underline min-[360px]:px-2.5 sm:px-4 sm:text-base"
               >
                 {label}
               </a>
