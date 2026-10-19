@@ -1,9 +1,8 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
-const siteUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
-  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-  : 'http://localhost:3000';
+// Canonical public address, used for share-preview (og:image) URLs. Set NEXT_PUBLIC_SITE_URL when a custom domain is connected.
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://portfolio-ruslan-jurakulov.vercel.app';
 
 const title = 'Ruslan Jurakulov: web developer for small businesses';
 const description =
