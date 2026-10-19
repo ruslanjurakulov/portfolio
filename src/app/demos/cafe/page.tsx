@@ -11,13 +11,14 @@ export const metadata: Metadata = {
 
 const container = 'mx-auto w-full max-w-5xl px-4 sm:px-6';
 
+// Every item has an AI-generated picture; the menu intro says so once.
 const menu = [
-  { name: 'Cardamom flat white', tag: 'Hot', text: 'Double espresso, silky milk and a pinch of cardamom.' },
-  { name: 'Saffron honey latte', tag: 'Hot', text: 'Warm, floral and gently sweet. Our made-up signature.' },
-  { name: 'Pomegranate tonic', tag: 'Cold', text: 'Sparkling tonic, pomegranate and a squeeze of lemon.' },
-  { name: 'Pistachio croissant', tag: 'Pastry', text: 'Flaky layers with a green, nutty cream centre.' },
-  { name: 'Walnut and date cake', tag: 'Pastry', text: 'Dense, moist and not too sweet. Good with black tea.' },
-  { name: 'Mint tea for two', tag: 'Tea', text: 'A pot of black tea with fresh mint and two small glasses.' },
+  { name: 'Cardamom flat white', tag: 'Hot', text: 'Double espresso, silky milk and a pinch of cardamom.', img: 'menu-1', alt: 'A cup of latte with leaf-shaped milk foam on an oak table' },
+  { name: 'Saffron honey latte', tag: 'Hot', text: 'Warm, floral and gently sweet. Our made-up signature.', img: 'menu-4', alt: 'A cup of golden latte topped with saffron threads and honey, on a saucer' },
+  { name: 'Pomegranate tonic', tag: 'Cold', text: 'Sparkling tonic, pomegranate and a squeeze of lemon.', img: 'menu-5', alt: 'A tall glass of sparkling pink drink with ice, pomegranate seeds and a lemon slice' },
+  { name: 'Pistachio croissant', tag: 'Pastry', text: 'Flaky layers with a green, nutty cream centre.', img: 'menu-2', alt: 'A golden croissant on a cream plate on an oak table' },
+  { name: 'Walnut and date cake', tag: 'Pastry', text: 'Dense, moist and not too sweet. Good with black tea.', img: 'menu-3', alt: 'A slice of three-layer vanilla cake on a cream plate' },
+  { name: 'Mint tea for two', tag: 'Tea', text: 'A pot of black tea with fresh mint and two small glasses.', img: 'menu-6', alt: 'A speckled ceramic teapot and two small cups of tea with mint leaves and lemon' },
 ];
 
 const hours = [
@@ -28,24 +29,6 @@ const hours = [
 
 const field =
   'mt-1 block min-h-[48px] w-full rounded-xl border border-ink/40 bg-surface px-4 py-3 text-ink placeholder:text-muted';
-
-function Cup() {
-  return (
-    <svg viewBox="0 0 320 300" className="float h-auto w-full" aria-hidden="true" focusable="false">
-      <circle cx="160" cy="160" r="130" className="fill-soft" />
-      <ellipse cx="160" cy="262" rx="110" ry="14" className="fill-ink" opacity="0.12" />
-      <g className="stroke-muted" fill="none" strokeWidth="6" strokeLinecap="round">
-        <path className="steam" d="M126 118c-12-16 12-26 0-44" />
-        <path className="steam" d="M160 112c-12-16 12-26 0-44" />
-        <path className="steam" d="M194 118c-12-16 12-26 0-44" />
-      </g>
-      <path d="M72 140h176v44a88 88 0 0 1-88 88 88 88 0 0 1-88-88z" className="fill-accent" />
-      <path d="M248 156h14a28 28 0 0 1 0 56h-22" fill="none" className="stroke-accent" strokeWidth="14" />
-      <ellipse cx="160" cy="140" rx="88" ry="14" className="fill-ink" opacity="0.85" />
-      <path d="M140 140c8 6 32 6 40 0" className="stroke-soft" strokeWidth="4" fill="none" strokeLinecap="round" />
-    </svg>
-  );
-}
 
 export default function CafeDemo() {
   return (
@@ -100,27 +83,61 @@ export default function CafeDemo() {
                 </a>
               </div>
             </div>
-            <div className="rise mx-auto w-full max-w-xs md:max-w-sm" style={stagger(2)}>
-              <Cup />
-            </div>
+            <figure className="rise mx-auto w-full max-w-md md:max-w-none" style={stagger(2)}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/demos/cafe/hero.webp"
+                width={1100}
+                height={1100}
+                alt="A cup of coffee and a croissant on a round oak table in morning light"
+                fetchPriority="high"
+                decoding="async"
+                className="h-auto w-full rounded-2xl"
+              />
+              <figcaption className="mt-2 text-sm text-muted">An AI-generated picture for this concept, not a real cafe.</figcaption>
+            </figure>
           </div>
         </section>
 
         <section id="menu" className="border-t border-line bg-soft">
           <div className={`${container} py-16 md:py-20`}>
             <h2 className="reveal text-4xl font-bold">Menu highlights</h2>
-            <p className="mt-3 text-muted">A sample menu with invented items. No prices on this concept page.</p>
+            <p className="mt-3 text-muted">A sample menu with invented items and AI-generated pictures. No prices on this concept page.</p>
             <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {menu.map((m, i) => (
                 <li key={m.name} className="reveal" style={stagger(i % 3)}>
-                  <div className="lift h-full rounded-xl border border-line bg-surface p-6">
-                  <span className="text-xs font-bold uppercase tracking-[0.16em] text-accent">{m.tag}</span>
-                  <h3 className="mt-2 text-2xl font-bold leading-tight">{m.name}</h3>
-                  <p className="mt-2 text-muted">{m.text}</p>
+                  <div className="lift h-full overflow-hidden rounded-xl border border-line bg-surface">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={`/demos/cafe/${m.img}.webp`} width={720} height={720} alt={m.alt} loading="lazy" decoding="async" className="aspect-[4/3] h-auto w-full object-cover" />
+                    <div className="p-6">
+                      <span className="text-xs font-bold uppercase tracking-[0.16em] text-accent">{m.tag}</span>
+                      <h3 className="mt-2 text-2xl font-bold leading-tight">{m.name}</h3>
+                      <p className="mt-2 text-muted">{m.text}</p>
+                    </div>
                   </div>
                 </li>
               ))}
             </ul>
+          </div>
+        </section>
+
+        <section id="place" className="border-t border-line">
+          <div className={`${container} py-16 md:py-20`}>
+            <h2 className="reveal text-4xl font-bold">The place</h2>
+            <p className="mt-3 max-w-xl text-muted">An imagined room, to show how a cafe site can present its space.</p>
+            <figure className="reveal mt-8" style={stagger(1)}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/demos/cafe/interior.webp"
+                width={1600}
+                height={900}
+                alt="A bright cafe with a wooden counter, an espresso machine, hanging lamps and small round tables by a window"
+                loading="lazy"
+                decoding="async"
+                className="h-auto w-full rounded-2xl"
+              />
+              <figcaption className="mt-2 text-sm text-muted">An AI-generated picture of an imagined interior. Nur Cafe is not a real place.</figcaption>
+            </figure>
           </div>
         </section>
 
@@ -132,7 +149,7 @@ export default function CafeDemo() {
                 Nur Cafe does not exist. It is a fictional business made up for this sample, so there is no real story, owner or address here.
               </p>
               <p>
-                On a real project this section would hold the owner’s own words and photos: how the place started, what makes it different and who works there.
+                On a real project this section would hold the owner’s own words and photos: how the place started, what makes it different and who works there. The pictures on this page are AI-generated, made only for this sample.
               </p>
             </div>
           </div>
@@ -143,8 +160,21 @@ export default function CafeDemo() {
             <div>
               <h2 className="reveal text-4xl font-bold">Opening hours</h2>
               <p className="mt-3 text-muted">Sample hours for the concept.</p>
+              <figure className="reveal mt-6" style={stagger(1)}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/demos/cafe/detail.webp"
+                  width={1000}
+                  height={750}
+                  alt="Coffee beans in a wooden scoop next to a ceramic pour-over coffee dripper"
+                  loading="lazy"
+                  decoding="async"
+                  className="h-auto w-full rounded-xl"
+                />
+                <figcaption className="mt-2 text-sm text-muted">An AI-generated picture for this concept.</figcaption>
+              </figure>
             </div>
-            <dl className="reveal rounded-xl border border-line bg-surface px-6" style={stagger(1)}>
+            <dl className="reveal self-start rounded-xl border border-line bg-surface px-6" style={stagger(1)}>
               {hours.map(([day, time]) => (
                 <div key={day} className="flex items-baseline justify-between gap-4 border-b border-line py-4 last:border-0">
                   <dt className="font-semibold">{day}</dt>
@@ -210,7 +240,7 @@ export default function CafeDemo() {
 
       <footer className="border-t border-line">
         <div className={`${container} py-8 text-sm text-muted`}>
-          <p>Nur Cafe is a concept demo and a fictional business. Not a real cafe.</p>
+          <p>Nur Cafe is a concept demo and a fictional business. Not a real cafe. The pictures are AI-generated.</p>
         </div>
       </footer>
     </div>
