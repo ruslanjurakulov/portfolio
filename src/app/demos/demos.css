@@ -1,0 +1,235 @@
+/* ==========================================================================
+ * The two concept demos (/demos/cafe, /demos/freelancer): fictional sample sites with looks of their own.
+ * Their tokens, type and motion live here, scoped to the demo wrappers, so the portfolio's own styles
+ * never touch them. Imported by app/demos/layout.tsx.
+ * ======================================================================== */
+
+.theme-cafe,
+.theme-freelancer {
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+  --dur-micro: 160ms; /* hover, press */
+  --dur-short: 320ms; /* small state changes */
+  --dur-base: 560ms; /* reveals */
+  --dur-long: 900ms;
+  --stagger: 70ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in: cubic-bezier(0.64, 0, 0.78, 0);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@supports (transition-timing-function: linear(0, 1)) {
+  .theme-cafe,
+  .theme-freelancer {
+    --ease-spring: linear(0, 0.019, 0.068, 0.139, 0.226, 0.321, 0.419, 0.516, 0.609, 0.695, 0.773, 0.842, 0.902, 0.952, 0.992, 1.024, 1.048, 1.065, 1.076, 1.082, 1.084, 1.082, 1.078, 1.072, 1.064, 1.056, 1.048, 1.04, 1.032, 1.025, 1.019, 1.013, 1.008, 1.004, 1, 0.998, 1);
+  }
+}
+
+/* Concept demo: warm cafe, serif headings */
+.theme-cafe {
+  --bg: 251 243 230;
+  --surface: 255 250 240;
+  --ink: 43 29 20;
+  --muted: 106 86 72;
+  --line: 232 217 192;
+  --accent: 168 67 31;
+  --on-accent: 255 255 255;
+  --soft: 244 228 202;
+  --font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, 'Times New Roman', serif;
+  --font-body: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+  --rv-d: 1100ms;
+  --rv-y: 14px;
+  --rv-e: var(--ease-out);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .theme-cafe {
+    --bg: 29 20 14;
+    --surface: 42 29 20;
+    --ink: 246 233 214;
+    --muted: 194 170 142;
+    --line: 67 48 31;
+    --accent: 232 146 95;
+    --on-accent: 29 20 14;
+    --soft: 52 36 24;
+  }
+}
+:root[data-theme='dark'] .theme-cafe {
+  --bg: 29 20 14;
+  --surface: 42 29 20;
+  --ink: 246 233 214;
+  --muted: 194 170 142;
+  --line: 67 48 31;
+  --accent: 232 146 95;
+  --on-accent: 29 20 14;
+  --soft: 52 36 24;
+}
+
+/* Concept demo: bold freelancer, rounded type, hard shadows */
+.theme-freelancer {
+  --bg: 245 245 247;
+  --surface: 255 255 255;
+  --ink: 11 11 15;
+  --muted: 82 82 94;
+  --line: 11 11 15;
+  --accent: 255 90 95;
+  --on-accent: 11 11 15;
+  --soft: 255 225 77;
+  --font-display: ui-rounded, 'SF Pro Rounded', 'Hiragino Maru Gothic ProN', Quicksand, 'Segoe UI', system-ui, sans-serif;
+  --font-body: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+  --rv-d: 650ms;
+  --rv-y: 30px;
+  --rv-s: 0.94;
+  --rv-e: var(--ease-spring);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .theme-freelancer {
+    --bg: 11 11 15;
+    --surface: 23 23 29;
+    --ink: 245 245 247;
+    --muted: 170 170 182;
+    --line: 245 245 247;
+    --accent: 255 90 95;
+    --on-accent: 11 11 15;
+    --soft: 255 225 77;
+  }
+}
+:root[data-theme='dark'] .theme-freelancer {
+  --bg: 11 11 15;
+  --surface: 23 23 29;
+  --ink: 245 245 247;
+  --muted: 170 170 182;
+  --line: 245 245 247;
+  --accent: 255 90 95;
+  --on-accent: 11 11 15;
+  --soft: 255 225 77;
+}
+
+/* Focus ring (the dark banner at the top of each demo uses a white one) */
+.theme-cafe :focus-visible,
+.theme-freelancer :focus-visible {
+  outline: 3px solid rgb(var(--accent));
+  outline-offset: 3px;
+  border-radius: 4px;
+  animation: ring var(--dur-micro) var(--ease-out);
+}
+.theme-cafe .on-dark :focus-visible,
+.theme-freelancer .on-dark :focus-visible {
+  outline-color: #fff;
+}
+
+/* Hover / press feedback */
+.theme-cafe .lift,
+.theme-cafe .press,
+.theme-freelancer .lift,
+.theme-freelancer .press {
+  transition: transform var(--dur-short) var(--ease-out), box-shadow var(--dur-short), border-color var(--dur-short),
+    background-color var(--dur-micro), color var(--dur-micro), opacity var(--dur-micro);
+}
+@media (hover: hover) {
+  .theme-cafe .lift:hover,
+  .theme-freelancer .lift:hover {
+    box-shadow: 0 18px 40px -18px rgb(var(--accent) / 0.55);
+    border-color: rgb(var(--accent) / 0.65);
+  }
+  .mo .theme-cafe .lift:hover {
+    transform: translate3d(0, -4px, 0);
+  }
+  .mo .theme-freelancer .lift:hover {
+    transform: translate3d(-2px, -2px, 0);
+    box-shadow: 7px 7px 0 0 rgb(var(--ink));
+    border-color: rgb(var(--ink));
+  }
+  .mo .theme-freelancer .chip:hover {
+    transform: rotate(-3deg) translate3d(0, -2px, 0);
+  }
+}
+.mo .theme-cafe .press:active {
+  transform: scale(0.97);
+}
+.mo .theme-freelancer .press:active {
+  transform: translate3d(3px, 3px, 0);
+  box-shadow: 1px 1px 0 0 rgb(var(--ink));
+}
+
+/* Scroll reveal: hidden only once JS is running (.js) and motion is on (.mo) */
+.js.mo .theme-cafe .reveal,
+.js.mo .theme-freelancer .reveal {
+  opacity: 0;
+  transform: translate3d(0, var(--rv-y, 22px), 0) scale(var(--rv-s, 1));
+  transition: opacity var(--dur-base) var(--ease-out), transform var(--rv-d, var(--dur-long)) var(--rv-e, var(--ease-spring));
+  transition-delay: calc(var(--i, 0) * var(--stagger));
+}
+.js.mo .theme-cafe .reveal.in,
+.js.mo .theme-freelancer .reveal.in {
+  opacity: 1;
+  transform: none;
+}
+.mo .theme-cafe .rise,
+.mo .theme-freelancer .rise {
+  animation: rise var(--dur-base) var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 70ms + 40ms);
+}
+.mo .theme-cafe .float {
+  animation: float 7s ease-in-out infinite;
+}
+.mo .theme-cafe .steam {
+  animation: steam 4s ease-in-out infinite;
+}
+.mo .theme-cafe .steam:nth-of-type(2) {
+  animation-delay: 1.3s;
+}
+.mo .theme-cafe .steam:nth-of-type(3) {
+  animation-delay: 2.6s;
+}
+html.mo {
+  scroll-behavior: smooth;
+}
+
+/* Safety net: if the OS asks for reduced motion, nothing moves, whatever else is set */
+@media (prefers-reduced-motion: reduce) {
+  .theme-cafe *,
+  .theme-cafe *::before,
+  .theme-cafe *::after,
+  .theme-freelancer *,
+  .theme-freelancer *::before,
+  .theme-freelancer *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes ring {
+  from {
+    outline-offset: 0;
+  }
+}
+@keyframes steam {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translateY(-6px);
+  }
+}
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}

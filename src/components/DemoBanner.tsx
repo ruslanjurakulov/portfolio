@@ -15,7 +15,7 @@ export function DemoBanner() {
             <span aria-hidden="true">←</span> Back to Ruslan’s portfolio
           </Link>
         </div>
-        <ThemeToggle label="Dark theme" className="border-[#f4f3ee]/40 text-[#f4f3ee] hover:bg-white/10" />
+        <ThemeToggle label="Dark theme" className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#f4f3ee]/40 text-[#f4f3ee] hover:bg-white/10" />
       </div>
     </aside>
   );

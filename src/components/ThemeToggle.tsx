@@ -37,7 +37,7 @@ export function ThemeToggle({ label, className = '' }: { label: string; classNam
       aria-label={label}
       aria-pressed={dark}
       title={label}
-      className={`press inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border ${className}`}
+      className={`tool press ${className}`}
     >
       <svg {...svg} className="i-moon h-5 w-5">
         <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
