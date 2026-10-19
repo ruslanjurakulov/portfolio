@@ -11,14 +11,14 @@ export const metadata: Metadata = {
 
 const container = 'mx-auto w-full max-w-5xl px-4 sm:px-6';
 
-// The first three have a picture (an AI-generated one, said so on the page); the rest are text only.
+// Every item has an AI-generated picture; the menu intro says so once.
 const menu = [
   { name: 'Cardamom flat white', tag: 'Hot', text: 'Double espresso, silky milk and a pinch of cardamom.', img: 'menu-1', alt: 'A cup of latte with leaf-shaped milk foam on an oak table' },
+  { name: 'Saffron honey latte', tag: 'Hot', text: 'Warm, floral and gently sweet. Our made-up signature.', img: 'menu-4', alt: 'A cup of golden latte topped with saffron threads and honey, on a saucer' },
+  { name: 'Pomegranate tonic', tag: 'Cold', text: 'Sparkling tonic, pomegranate and a squeeze of lemon.', img: 'menu-5', alt: 'A tall glass of sparkling pink drink with ice, pomegranate seeds and a lemon slice' },
   { name: 'Pistachio croissant', tag: 'Pastry', text: 'Flaky layers with a green, nutty cream centre.', img: 'menu-2', alt: 'A golden croissant on a cream plate on an oak table' },
   { name: 'Walnut and date cake', tag: 'Pastry', text: 'Dense, moist and not too sweet. Good with black tea.', img: 'menu-3', alt: 'A slice of three-layer vanilla cake on a cream plate' },
-  { name: 'Saffron honey latte', tag: 'Hot', text: 'Warm, floral and gently sweet. Our made-up signature.' },
-  { name: 'Pomegranate tonic', tag: 'Cold', text: 'Sparkling tonic, pomegranate and a squeeze of lemon.' },
-  { name: 'Mint tea for two', tag: 'Tea', text: 'A pot of black tea with fresh mint and two small glasses.' },
+  { name: 'Mint tea for two', tag: 'Tea', text: 'A pot of black tea with fresh mint and two small glasses.', img: 'menu-6', alt: 'A speckled ceramic teapot and two small cups of tea with mint leaves and lemon' },
 ];
 
 const hours = [
@@ -107,10 +107,8 @@ export default function CafeDemo() {
               {menu.map((m, i) => (
                 <li key={m.name} className="reveal" style={stagger(i % 3)}>
                   <div className="lift h-full overflow-hidden rounded-xl border border-line bg-surface">
-                    {m.img ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={`/demos/cafe/${m.img}.webp`} width={720} height={720} alt={m.alt} loading="lazy" decoding="async" className="aspect-[4/3] h-auto w-full object-cover" />
-                    ) : null}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={`/demos/cafe/${m.img}.webp`} width={720} height={720} alt={m.alt} loading="lazy" decoding="async" className="aspect-[4/3] h-auto w-full object-cover" />
                     <div className="p-6">
                       <span className="text-xs font-bold uppercase tracking-[0.16em] text-accent">{m.tag}</span>
                       <h3 className="mt-2 text-2xl font-bold leading-tight">{m.name}</h3>
