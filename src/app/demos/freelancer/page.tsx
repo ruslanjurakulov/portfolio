@@ -111,11 +111,12 @@ export default function FreelancerDemo() {
 
       <main>
         <section id="top">
-          <div className={`${container} py-14 md:py-24`}>
+          <div className={`${container} grid items-center gap-10 py-14 md:py-24 lg:grid-cols-[1.15fr_0.85fr]`}>
+            <div>
             <p className="rise inline-block rounded-full border-2 border-ink bg-soft px-4 py-1 font-mono text-sm font-bold text-[#0b0b0f]" style={stagger(0)}>
               Freelance designer (fictional)
             </p>
-            <h1 className="rise mt-6 max-w-3xl text-5xl font-extrabold leading-[1.02] sm:text-7xl" style={stagger(1)}>
+            <h1 className="rise mt-6 max-w-3xl text-5xl font-extrabold leading-[1.02] sm:text-7xl lg:text-6xl xl:text-7xl" style={stagger(1)}>
               Hi, I’m Aylin. I design{' '}
               <span className="rounded-lg bg-accent px-2 text-on-accent">clear</span>, friendly interfaces.
             </h1>
@@ -136,21 +137,54 @@ export default function FreelancerDemo() {
                 Say hello
               </a>
             </div>
+            </div>
+            <figure className="rise" style={stagger(2)}>
+              <div className={`${box} overflow-hidden rounded-2xl`}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/demos/freelancer/desk.webp"
+                  width={1200}
+                  height={675}
+                  alt="A laptop on a wooden desk showing a coral and grey web page, with a notebook, a plant and a mug"
+                  fetchPriority="high"
+                  decoding="async"
+                  className="aspect-[4/3] h-auto w-full object-cover object-[62%_50%]"
+                />
+              </div>
+              <figcaption className="mt-3 text-sm text-muted">An AI-generated picture for this concept, not a real workspace.</figcaption>
+            </figure>
           </div>
         </section>
 
         <section id="skills" className="border-y-2 border-ink bg-soft text-[#0b0b0f]">
-          <div className={`${container} py-14 md:py-20`}>
-            <h2 className="reveal text-4xl font-extrabold">Skills</h2>
-            <ul className="mt-8 flex flex-wrap gap-3">
-              {skills.map((s, i) => (
-                <li key={s} className="reveal" style={stagger(i)}>
-                  <span className="chip lift inline-block rounded-full border-2 border-[#0b0b0f] bg-white px-5 py-2 text-base font-bold shadow-[3px_3px_0_0_#0b0b0f]">
-                    {s}
-                  </span>
-                </li>
-              ))}
-            </ul>
+          <div className={`${container} grid items-center gap-10 py-14 md:py-20 lg:grid-cols-2`}>
+            <div>
+              <h2 className="reveal text-4xl font-extrabold">Skills</h2>
+              <ul className="mt-8 flex flex-wrap gap-3">
+                {skills.map((s, i) => (
+                  <li key={s} className="reveal" style={stagger(i)}>
+                    <span className="chip lift inline-block rounded-full border-2 border-[#0b0b0f] bg-white px-5 py-2 text-base font-bold shadow-[3px_3px_0_0_#0b0b0f]">
+                      {s}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <figure className="reveal" style={stagger(1)}>
+              <div className="overflow-hidden rounded-2xl border-2 border-[#0b0b0f] shadow-[4px_4px_0_0_#0b0b0f]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/demos/freelancer/sketch.webp"
+                  width={1000}
+                  height={750}
+                  alt="Paper wireframes of web pages on a white table with coral sticky notes, a pencil and a coffee cup"
+                  loading="lazy"
+                  decoding="async"
+                  className="h-auto w-full"
+                />
+              </div>
+              <figcaption className="mt-3 text-sm">An AI-generated picture for this concept.</figcaption>
+            </figure>
           </div>
         </section>
 
@@ -200,7 +234,7 @@ export default function FreelancerDemo() {
 
       <footer className="border-t-2 border-ink">
         <div className={`${container} py-8 text-sm text-muted`}>
-          <p>Aylin Demo is a concept demo and a fictional person. Not a real designer.</p>
+          <p>Aylin Demo is a concept demo and a fictional person. Not a real designer. The pictures are AI-generated.</p>
         </div>
       </footer>
     </div>

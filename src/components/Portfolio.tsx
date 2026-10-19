@@ -17,8 +17,11 @@ const STORAGE_KEY = 'lang';
 const isLang = (v: unknown): v is Lang => v === 'en' || v === 'ru' || v === 'uz';
 
 // Real screenshots (taken at 390x844 @2x and 1280x800): the live product and the two concept demos.
+// The phone screenshots of the demos are taller (390x1560) so the picture has something to scroll through.
 const shot = (name: string, view: 'phone' | 'desktop') =>
-  view === 'phone' ? { src: `/work/${name}-phone.webp`, width: 780, height: 1688 } : { src: `/work/${name}-desktop.webp`, width: 1280, height: 800 };
+  view === 'phone'
+    ? { src: `/work/${name}-phone.webp`, width: 780, height: name === 'nightshift' ? 1688 : 3120 }
+    : { src: `/work/${name}-desktop.webp`, width: 1280, height: 800 };
 
 const work: { shots: string; live: boolean; href: string; from?: number }[] = [
   // The phone view starts below NightShift's own (wrapped) header: 418 of 1688 pixels.
@@ -288,6 +291,8 @@ export function Portfolio({ year }: { year: number }) {
               <ol>
                 {t.process.steps.map((s, i) => (
                   <li key={i} className="rv" style={stagger(0)}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={`/process/process-${i + 1}.webp`} width={800} height={800} alt="" loading="lazy" decoding="async" className="step-pic" />
                     <h3 className="t-lead">{s.title}</h3>
                     <p>{s.text}</p>
                   </li>

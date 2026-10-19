@@ -810,6 +810,13 @@ html:not(.mo) .i-pause {
     margin-top: 10px;
     max-width: 40ch;
   }
+  .step-pic {
+    display: block;
+    width: 100%;
+    max-width: 22rem;
+    height: auto;
+    margin-bottom: 24px;
+  }
   .steps-track {
     position: absolute;
     left: 0;
