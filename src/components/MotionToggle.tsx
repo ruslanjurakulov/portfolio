@@ -37,7 +37,7 @@ export function MotionToggle({ label, className = '' }: { label: string; classNa
       aria-label={label}
       aria-pressed={paused}
       title={label}
-      className={`motion-toggle press inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border ${className}`}
+      className={`tool motion-toggle press ${className}`}
     >
       <svg {...svg} className="i-pause h-5 w-5">
         <path d="M9 5v14M15 5v14" />

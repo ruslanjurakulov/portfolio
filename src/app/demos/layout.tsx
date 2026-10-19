@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import './demos.css';
 
 // Concept demos are samples, not real businesses: keep them out of search results.
 export const metadata: Metadata = {

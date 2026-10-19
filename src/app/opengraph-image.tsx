@@ -4,6 +4,7 @@ export const alt = 'Ruslan Jurakulov, web developer for small businesses';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
+// Flat deep-green card: the name, then one plain sentence. No gradient, no ornament.
 export default function OpenGraphImage() {
   return new ImageResponse(
     (
@@ -13,15 +14,14 @@ export default function OpenGraphImage() {
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'center',
-          padding: 90,
-          background: 'linear-gradient(135deg, #06201f 0%, #0f766e 100%)',
-          color: '#f4f3ee',
+          justifyContent: 'flex-end',
+          padding: 80,
+          background: '#082622',
+          color: '#e8f4ef',
         }}
       >
-        <div style={{ fontSize: 30, color: '#5eead4', marginBottom: 24 }}>Portfolio</div>
-        <div style={{ fontSize: 96, fontWeight: 800, lineHeight: 1.05 }}>Ruslan Jurakulov</div>
-        <div style={{ fontSize: 42, marginTop: 28, maxWidth: 900, color: '#d5f5f0' }}>
+        <div style={{ fontSize: 120, fontWeight: 700, lineHeight: 1, letterSpacing: -4 }}>Ruslan Jurakulov</div>
+        <div style={{ fontSize: 44, marginTop: 32, maxWidth: 900, color: '#5eead4' }}>
           Web developer building fast sites for small businesses
         </div>
       </div>

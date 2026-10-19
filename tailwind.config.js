@@ -18,6 +18,7 @@ module.exports = {
         deep: token('deep'),
         'on-deep': token('on-deep'),
         mint: token('mint'),
+        'accent-strong': token('accent-strong'),
       },
       fontFamily: {
         display: ['var(--font-display)'],

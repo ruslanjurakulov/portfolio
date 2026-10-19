@@ -14,14 +14,7 @@ export interface Dict {
   motionLabel: string;
   nav: { work: string; services: string; process: string; faq: string; contact: string };
   hero: {
-    eyebrow: string;
     title: string;
-    /** Part of `title` that is highlighted (must appear in `title` verbatim). */
-    titleAccent: string;
-    /** Lead-in for the cycling words, e.g. "I build". */
-    build: string;
-    /** Exactly three phrases; the hero cycles through them. */
-    words: string[];
     sub: string;
     cta: string;
     note: string;
@@ -36,11 +29,10 @@ export interface Dict {
     concept: string;
     newTab: string;
     labels: { problem: string; built: string; tools: string; shows: string };
-    preview: { group: string; phone: string; desktop: string; shotDesktop: string; shotPhone: string };
-    cards: { title: string; problem: string; built: string; tools: string; shows: string; cta: string }[];
+    preview: { group: string; phone: string; desktop: string };
+    /** `shotPhone` / `shotDesktop` are the alt texts of the screenshots of that project. */
+    cards: { title: string; problem: string; built: string; tools: string; shows: string; cta: string; shotPhone: string; shotDesktop: string }[];
   };
-  /** Labels for the at-a-glance numbers. The numbers themselves are counted from real data in the page. */
-  stats: { label: string; languages: string; steps: string; live: string; concept: string };
   services: { title: string; intro: string; items: Item[] };
   process: { title: string; steps: Item[] };
   why: { title: string; items: Item[] };
@@ -58,12 +50,8 @@ export const dict: Record<Lang, Dict> = {
     motionLabel: 'Pause animations',
     nav: { work: 'Work', services: 'Services', process: 'How it works', faq: 'FAQ', contact: 'Contact' },
     hero: {
-      eyebrow: 'Hi, I’m Ruslan, a web developer from Uzbekistan',
-      title: 'A fast, good-looking website for your business, built in days',
-      titleAccent: 'built in days',
-      build: 'I build',
-      words: ['landing pages', 'small business sites', 'multi-language sites'],
-      sub: 'Landing pages and small business sites that load quickly and feel right on a phone. In Uzbek, Russian or English.',
+      title: 'Your website, built in days',
+      sub: 'I’m Ruslan, a web developer from Uzbekistan. Landing pages and small business sites that load fast and feel right on a phone.',
       cta: 'Discuss your project',
       note: 'I reply on Telegram or by email.',
       ctaWork: 'See my work',
@@ -81,8 +69,6 @@ export const dict: Record<Lang, Dict> = {
         group: 'Preview size',
         phone: 'Phone view',
         desktop: 'Desktop view',
-        shotDesktop: 'Screenshot of the NightShift AI Studio home page on a desktop screen',
-        shotPhone: 'Screenshot of the NightShift AI Studio home page on a phone',
       },
       cards: [
         {
@@ -92,6 +78,8 @@ export const dict: Record<Lang, Dict> = {
           tools: 'AI-assisted development, reviewed by hand.',
           shows: 'I can ship a real, live product, not only mockups.',
           cta: 'Visit the live site',
+          shotPhone: 'Screenshot of the NightShift AI Studio home page on a phone',
+          shotDesktop: 'Screenshot of the NightShift AI Studio home page on a desktop screen',
         },
         {
           title: 'Cafe landing page',
@@ -100,6 +88,8 @@ export const dict: Record<Lang, Dict> = {
           tools: 'Next.js, Tailwind CSS, inline SVG. No external images or fonts.',
           shows: 'A fictional sample: how I would structure and style a real cafe’s site. Fast, static, mobile-first.',
           cta: 'View live demo',
+          shotPhone: 'Screenshot of the Nur Cafe concept demo on a phone',
+          shotDesktop: 'Screenshot of the Nur Cafe concept demo on a desktop screen',
         },
         {
           title: 'Freelancer portfolio',
@@ -108,10 +98,11 @@ export const dict: Record<Lang, Dict> = {
           tools: 'Next.js, Tailwind CSS, inline SVG. No external images or fonts.',
           shows: 'A fictional sample: a different look from the same toolkit, to show range.',
           cta: 'View live demo',
+          shotPhone: 'Screenshot of the Aylin Demo freelancer concept demo on a phone',
+          shotDesktop: 'Screenshot of the Aylin Demo freelancer concept demo on a desktop screen',
         },
       ],
     },
-    stats: { label: 'At a glance', languages: 'languages', steps: 'steps from message to site', live: 'live product', concept: 'concept demos' },
     services: {
       title: 'What I can do',
       intro: 'Practical help for small businesses and solo professionals.',
@@ -180,12 +171,8 @@ export const dict: Record<Lang, Dict> = {
     motionLabel: 'Остановить анимацию',
     nav: { work: 'Работы', services: 'Услуги', process: 'Как это работает', faq: 'Вопросы', contact: 'Контакты' },
     hero: {
-      eyebrow: 'Привет, я Руслан, веб-разработчик из Узбекистана',
-      title: 'Быстрый и красивый сайт для вашего бизнеса за считаные дни',
-      titleAccent: 'за считаные дни',
-      build: 'Делаю',
-      words: ['лендинги', 'сайты для малого бизнеса', 'многоязычные сайты'],
-      sub: 'Лендинги и сайты для малого бизнеса, которые быстро грузятся и удобны на телефоне. На узбекском, русском или английском.',
+      title: 'Ваш сайт за считаные дни',
+      sub: 'Я Руслан, веб-разработчик из Узбекистана. Лендинги и сайты для малого бизнеса, которые быстро грузятся и удобны на телефоне.',
       cta: 'Обсудить проект',
       note: 'Отвечаю в Telegram или по почте.',
       ctaWork: 'Мои работы',
@@ -203,8 +190,6 @@ export const dict: Record<Lang, Dict> = {
         group: 'Размер превью',
         phone: 'Вид на телефоне',
         desktop: 'Вид на компьютере',
-        shotDesktop: 'Скриншот главной страницы NightShift AI Studio на экране компьютера',
-        shotPhone: 'Скриншот главной страницы NightShift AI Studio на экране телефона',
       },
       cards: [
         {
@@ -214,6 +199,8 @@ export const dict: Record<Lang, Dict> = {
           tools: 'Разработка с помощью ИИ, код проверен вручную.',
           shows: 'Я довожу до запуска настоящие продукты, а не только рисую макеты.',
           cta: 'Открыть сайт',
+          shotPhone: 'Скриншот главной страницы NightShift AI Studio на экране телефона',
+          shotDesktop: 'Скриншот главной страницы NightShift AI Studio на экране компьютера',
         },
         {
           title: 'Лендинг кафе',
@@ -222,6 +209,8 @@ export const dict: Record<Lang, Dict> = {
           tools: 'Next.js, Tailwind CSS, SVG-графика. Без внешних картинок и шрифтов.',
           shows: 'Вымышленный пример: так я построил бы и оформил сайт настоящего кафе. Быстрый, статичный, в первую очередь для телефона.',
           cta: 'Смотреть демо',
+          shotPhone: 'Скриншот концепт-демо Nur Cafe на экране телефона',
+          shotDesktop: 'Скриншот концепт-демо Nur Cafe на экране компьютера',
         },
         {
           title: 'Портфолио фрилансера',
@@ -230,10 +219,11 @@ export const dict: Record<Lang, Dict> = {
           tools: 'Next.js, Tailwind CSS, SVG-графика. Без внешних картинок и шрифтов.',
           shows: 'Вымышленный пример: другой стиль на тех же инструментах, чтобы показать мой диапазон.',
           cta: 'Смотреть демо',
+          shotPhone: 'Скриншот концепт-демо портфолио фрилансера Aylin Demo на экране телефона',
+          shotDesktop: 'Скриншот концепт-демо портфолио фрилансера Aylin Demo на экране компьютера',
         },
       ],
     },
-    stats: { label: 'Коротко в цифрах', languages: 'языка', steps: 'шага от сообщения до сайта', live: 'действующий продукт', concept: 'концепт-демо' },
     services: {
       title: 'Что я умею',
       intro: 'Практическая помощь малому бизнесу и частным специалистам.',
@@ -302,12 +292,8 @@ export const dict: Record<Lang, Dict> = {
     motionLabel: 'Animatsiyani to‘xtatish',
     nav: { work: 'Ishlar', services: 'Xizmatlar', process: 'Ish tartibi', faq: 'Savollar', contact: 'Aloqa' },
     hero: {
-      eyebrow: 'Salom, men Ruslan, O‘zbekistonlik veb-dasturchiman',
-      title: 'Biznesingiz uchun tez va chiroyli sayt, bir necha kunda tayyor',
-      titleAccent: 'bir necha kunda tayyor',
-      build: 'Yarataman',
-      words: ['lending sahifalar', 'kichik biznes saytlari', 'ko‘p tilli saytlar'],
-      sub: 'Tez ochiladigan, telefonda qulay lending va kichik biznes saytlari. O‘zbek, rus yoki ingliz tilida.',
+      title: 'Sayt bir necha kunda tayyor',
+      sub: 'Men Ruslan, O‘zbekistonlik veb-dasturchiman. Tez ochiladigan, telefonda qulay lending va kichik biznes saytlari.',
       cta: 'Loyihani muhokama qilaylik',
       note: 'Telegram yoki emailda javob beraman.',
       ctaWork: 'Ishlarimni ko‘rish',
@@ -325,8 +311,6 @@ export const dict: Record<Lang, Dict> = {
         group: 'Ko‘rinish o‘lchami',
         phone: 'Telefon ko‘rinishi',
         desktop: 'Kompyuter ko‘rinishi',
-        shotDesktop: 'NightShift AI Studio bosh sahifasining kompyuter ekranidagi ko‘rinishi',
-        shotPhone: 'NightShift AI Studio bosh sahifasining telefon ekranidagi ko‘rinishi',
       },
       cards: [
         {
@@ -336,6 +320,8 @@ export const dict: Record<Lang, Dict> = {
           tools: 'Sun’iy intellekt yordamida yozilgan, qo‘lda tekshirilgan kod.',
           shows: 'Men nafaqat maket chizaman, haqiqiy mahsulotni ishga tushira olaman.',
           cta: 'Saytga o‘tish',
+          shotPhone: 'NightShift AI Studio bosh sahifasining telefon ekranidagi ko‘rinishi',
+          shotDesktop: 'NightShift AI Studio bosh sahifasining kompyuter ekranidagi ko‘rinishi',
         },
         {
           title: 'Kafe uchun lending',
@@ -344,6 +330,8 @@ export const dict: Record<Lang, Dict> = {
           tools: 'Next.js, Tailwind CSS va SVG grafika. Tashqi rasm va shriftlar yo‘q.',
           shows: 'Xayoliy namuna: haqiqiy kafe saytini qanday qurishim va bezashimni ko‘rsatadi. Tez, statik, avvalo telefon uchun.',
           cta: 'Demoni ko‘rish',
+          shotPhone: 'Nur Cafe namuna loyihasining telefon ekranidagi ko‘rinishi',
+          shotDesktop: 'Nur Cafe namuna loyihasining kompyuter ekranidagi ko‘rinishi',
         },
         {
           title: 'Frilanser portfoliosi',
@@ -352,10 +340,11 @@ export const dict: Record<Lang, Dict> = {
           tools: 'Next.js, Tailwind CSS va SVG grafika. Tashqi rasm va shriftlar yo‘q.',
           shows: 'Xayoliy namuna: o‘sha vositalar bilan butunlay boshqacha uslub, imkoniyatlarimni ko‘rsatish uchun.',
           cta: 'Demoni ko‘rish',
+          shotPhone: 'Aylin Demo frilanser namuna loyihasining telefon ekranidagi ko‘rinishi',
+          shotDesktop: 'Aylin Demo frilanser namuna loyihasining kompyuter ekranidagi ko‘rinishi',
         },
       ],
     },
-    stats: { label: 'Qisqacha raqamlarda', languages: 'ta til', steps: 'qadamda xabardan tayyor saytgacha', live: 'ta ishlab turgan mahsulot', concept: 'ta namuna loyiha' },
     services: {
       title: 'Nimalar qila olaman',
       intro: 'Kichik biznes va yakka tartibda ishlaydigan mutaxassislar uchun amaliy yordam.',
