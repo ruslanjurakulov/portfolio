@@ -1,0 +1,191 @@
+/* Decorative flight geometry for the portfolio and its two concept demos. */
+.p-editorial-cover {
+  --flight-ice: #b8f3d5;
+  --flight-acid: #defb83;
+}
+.p-editorial-cover .p-cover-photo::before {
+  --flight-map: url("./ephemeris.svg");
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 2% -4% 0 3%;
+  background-image: var(--flight-map);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  opacity: .89;
+  pointer-events: none;
+  transform: translate(var(--flight-x, 0px), var(--flight-y, 0px));
+}
+.portfolio-v2 .p-editorial-cover::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: auto 0 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #67867a 24%, #dbffc0 54%, #4f7660 85%, transparent);
+}
+.p-editorial-cover .mh-line--accent .mh-letter {
+  background: linear-gradient(155deg, #fbffe7, #e3ff92 43%, #c3e880 68%, #98dbc5);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  text-shadow: none;
+}
+.p-editorial-cover .p-cover-meta i {
+  box-shadow: 0 0 0 3px #c2ed8c1f, 0 0 13px #c9ff959e;
+}
+.portfolio-v2 .p-editorial-cover .p-actions .p-button:first-child {
+  background: linear-gradient(112deg, #e7ffa6, #d7f673 60%, #b9e9a2);
+  color: #122017;
+  border-color: #e2ffab;
+  box-shadow: inset 0 1px 0 #ffffff80, 0 2px 24px #c7f78322;
+}
+.portfolio-v2 .p-editorial-cover .p-actions .p-button-secondary:hover,
+.portfolio-v2 .p-editorial-cover .p-actions .p-button-secondary:focus-visible {
+  border-color: #c8edb9;
+  background: #1d3025;
+}
+.portfolio-v2 .p-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: .65em;
+}
+.portfolio-v2 .p-kicker::after {
+  content: "";
+  display: inline-block;
+  width: clamp(28px, 4vw, 76px);
+  height: 4px;
+  background: repeating-linear-gradient(113deg, currentColor 0 1px, transparent 1px 5px);
+  opacity: .62;
+  transform-origin: left;
+}
+.p-editorial-cover .p-cover-inner { position: relative; z-index: 1; }
+.p-editorial-cover .p-cover-footer {
+  position: relative;
+}
+.p-editorial-cover .p-cover-footer::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: linear-gradient(90deg, #d9fac14f, #deffbe14 30%, #a4dbc833 75%, transparent);
+}
+.theme-cafe main > #top,
+.theme-freelancer main > #top { position: relative; isolation: isolate; }
+.theme-cafe #top figure.rise,
+.theme-freelancer #top figure.rise { position: relative; isolation: isolate; }
+.theme-cafe #top figure.rise::after,
+.theme-freelancer #top figure.rise::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  inset: -7px;
+  background:
+    linear-gradient(currentColor,currentColor) left top / 26px 1px,
+    linear-gradient(currentColor,currentColor) left top / 1px 26px,
+    linear-gradient(currentColor,currentColor) right bottom / 26px 1px,
+    linear-gradient(currentColor,currentColor) right bottom / 1px 26px;
+  background-repeat: no-repeat;
+  opacity: .6;
+}
+.theme-cafe #top figure.rise::after { color: rgb(var(--accent)); border-radius: 4px; }
+.theme-freelancer #top figure.rise::after { color: rgb(var(--ink)); }
+
+@keyframes flight-orbit-arrive {
+  from { opacity: .18; scale: 1.065; rotate: -4deg; }
+  to { opacity: .89; scale: 1; rotate: 0deg; }
+}
+@keyframes flight-type-arrive {
+  from { opacity: .2; transform: perspective(450px) translateY(.34em) rotateX(-28deg); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes flight-calibrate {
+  from { transform: scaleX(.16); opacity: .2; }
+  to { transform: scaleX(1); opacity: .62; }
+}
+@keyframes flight-sweep {
+  from { transform: scaleX(.05); opacity: .35; }
+  to { transform: scaleX(1); opacity: 1; }
+}
+@keyframes flight-cafe-iris {
+  from { clip-path: circle(16% at 55% 44%); }
+  to { clip-path: circle(88% at 55% 44%); }
+}
+@keyframes flight-studio-shutter {
+  from { clip-path: polygon(0 0,8% 0,8% 34%,3% 34%,3% 68%,0 68%,0 100%,0 100%); }
+  50% { clip-path: polygon(0 0,88% 0,88% 34%,70% 34%,70% 68%,53% 68%,53% 100%,0 100%); }
+  to { clip-path: polygon(0 0,100% 0,100% 34%,100% 34%,100% 68%,100% 68%,100% 100%,0 100%); }
+}
+@keyframes flight-frame {
+  from { scale: .94; opacity: .12; }
+  to { scale: 1; opacity: .6; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html.mo .p-editorial-cover .p-cover-photo::before {
+    animation: flight-orbit-arrive 1250ms cubic-bezier(.19,1,.22,1) both;
+    transition: transform 650ms cubic-bezier(.18,.68,.23,1);
+  }
+  html.mo .p-cover-photo[data-flight-visible]::before {
+    background-image: url("./beacons.svg"), var(--flight-map);
+  }
+  html.mo .p-editorial-cover .motion-heading--hero[data-motion-ready][data-motion-revealed] .mh-letter {
+    transform-origin: 45% 90%;
+    animation: flight-type-arrive 630ms cubic-bezier(.18,.82,.22,1) var(--mh-delay,0ms) backwards;
+  }
+  html.mo .p-editorial-cover .p-cover-footer::before {
+    transform-origin: left;
+    animation: flight-sweep 1000ms cubic-bezier(.22,.8,.25,1) 100ms backwards;
+  }
+  html.mo .p-kicker[data-flight-entered]::after {
+    animation: flight-calibrate 700ms cubic-bezier(.18,.76,.21,1) both;
+  }
+  html.mo .theme-cafe #top figure.rise > img {
+    animation: flight-cafe-iris 900ms cubic-bezier(.19,.82,.2,1) both;
+  }
+  html.mo .theme-freelancer #top figure.rise > div > img {
+    animation: flight-studio-shutter 780ms cubic-bezier(.18,.78,.22,1) both;
+  }
+  html.mo :is(.theme-cafe,.theme-freelancer) #top figure.rise::after {
+    animation: flight-frame 820ms cubic-bezier(.21,.82,.22,1) both;
+  }
+  html.mo .p-editorial-cover .p-actions .p-button:first-child:is(:hover,:focus-visible) {
+    box-shadow: inset 0 1px 0 #fff9, 0 4px 30px #d2ff8d40;
+  }
+}
+@media (max-width: 799px) {
+  .p-editorial-cover .p-cover-photo::before { inset: -8% -7% -4% 3%; opacity: .78; }
+  .theme-cafe #top figure.rise::after, .theme-freelancer #top figure.rise::after { inset: -4px; }
+}
+@media (forced-colors: active) {
+  .p-editorial-cover .mh-line--accent .mh-letter { color: CanvasText; background: none; }
+  .p-editorial-cover .p-cover-photo::before { display: none; }
+}
+@media print {
+  .p-editorial-cover .p-cover-photo::before,
+  .p-editorial-cover .p-cover-footer::before,
+  .p-kicker::after { display: none; }
+  .p-editorial-cover .mh-line--accent .mh-letter { color: inherit; background: none; }
+}
+
+@keyframes flight-light-pass {
+  0% { opacity: 0; transform: translateX(-42%) skewX(-17deg); }
+  26% { opacity: .55; }
+  100% { opacity: 0; transform: translateX(65%) skewX(-17deg); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html.mo .p-editorial-cover::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    pointer-events: none;
+    inset: 0 0 0 35%;
+    background: linear-gradient(95deg,transparent 43%,#d4ffc009 47%,#edffd83b 50%,#d4ffc008 54%,transparent 57%);
+    animation: flight-light-pass 1420ms cubic-bezier(.21,.64,.27,1) both;
+  }
+}
+@media (max-width: 799px) {
+  html.mo .p-editorial-cover::before { inset: 0 0 auto 0; height: clamp(215px,57vw,390px); }
+}
